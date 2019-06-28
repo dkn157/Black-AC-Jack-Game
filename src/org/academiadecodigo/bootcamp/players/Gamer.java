@@ -34,4 +34,12 @@ public abstract class Gamer {
     public void gatherWinnings(int winnings) {
         money+=winnings;
     }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }
