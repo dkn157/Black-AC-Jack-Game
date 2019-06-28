@@ -1,6 +1,6 @@
 package org.academiadecodigo.bootcamp;
 
-import org.academiadecodigo.bootcamp.Deck.Deck;
+import org.academiadecodigo.bootcamp.deck.Deck;
 
 public class Main {
 

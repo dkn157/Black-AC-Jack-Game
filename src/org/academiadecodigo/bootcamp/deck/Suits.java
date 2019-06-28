@@ -1,4 +1,4 @@
-package org.academiadecodigo.bootcamp.Deck;
+package org.academiadecodigo.bootcamp.deck;
 
 
 public enum Suits {
