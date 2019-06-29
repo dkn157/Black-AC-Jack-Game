@@ -18,6 +18,7 @@ public class House {
     private LinkedList<PlayerHandler> playerList;
     private Deck deck;
     private int tableMoney;
+    ExecutorService fixedPool;
 
 
 
@@ -31,27 +32,17 @@ public class House {
 
     public void init() throws IOException {
 
-        ExecutorService fixedPool = Executors.newFixedThreadPool(1500);
+        fixedPool = Executors.newFixedThreadPool(1500);
         serverSocket = new ServerSocket(myPort);
 
         while (true) {
-
-            Socket clientSocket = serverSocket.accept();
-
-            PlayerHandler playerHandler = new PlayerHandler(clientSocket, this);
-            fixedPool.submit(playerHandler);
-            playerList.add(playerHandler);
-
+            listening();
             synchronized (this) {
                 synchronized (playerList) {
 
                     while (playerList.size() > 1) {
 
-                        for (int i = 0; i < playerList.size(); i++) {
-                            playerList.get(i).playerRound();
-                        }
 
-                        checkWhoWon();
 
                         //botar menu p ver quem quer mais
 
@@ -138,5 +129,21 @@ public class House {
 
         return theyAreReady;
 
+    }
+
+    public void listening() throws IOException {
+        Socket clientSocket = serverSocket.accept();
+
+        PlayerHandler playerHandler = new PlayerHandler(clientSocket, this);
+        fixedPool.submit(playerHandler);
+        playerList.add(playerHandler);
+    }
+
+    public void doARound() throws IOException {
+        for (int i = 0; i < playerList.size(); i++) {
+            playerList.get(i).playerRound();
+        }
+
+        checkWhoWon();
     }
 }

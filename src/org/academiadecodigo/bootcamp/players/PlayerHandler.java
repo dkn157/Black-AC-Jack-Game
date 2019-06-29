@@ -40,6 +40,7 @@ public class PlayerHandler extends Gamer implements Runnable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            makeIntroduction();
         }
     }
 
@@ -47,7 +48,7 @@ public class PlayerHandler extends Gamer implements Runnable {
     public void run() {
 
         synchronized (house) {
-            makeIntroduction();
+            startingMenu();
 
             //todo colocar menu entrar/sair
             resetHand();
@@ -116,6 +117,9 @@ public class PlayerHandler extends Gamer implements Runnable {
         ageQuestion.setMessage("\nHow old are you? Keep in mind no minors are allowed here.\n");
         setAge(prompt.getUserInput(ageQuestion));
 
+    }
+
+    public void startingMenu() {
         String[] readyMenu = {"Let´s play!","Exit"};
         MenuInputScanner scanner = new MenuInputScanner(readyMenu);
         scanner.setMessage("Do you want to play some BlackJack?????");
