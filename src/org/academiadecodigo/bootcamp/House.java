@@ -43,11 +43,9 @@ public class House {
             synchronized (this) {
                 synchronized (playerList) {
 
-                    while (playerList.size() > 3) {
+                    while (playerList.size() > 1) {
 
                         doARound();
-
-                        //botar menu p ver quem quer mais
 
                     }
                 }
@@ -75,7 +73,7 @@ public class House {
         return playerList;
     }
 
-    public void checkWhoWon() {
+    public void checkWhoWon() throws IOException {
 
         LinkedList<Integer> scores = new LinkedList<>();
 
@@ -108,7 +106,7 @@ public class House {
         for (int i = 0; i < winners.size(); i++) {
 
             winners.get(i).bet(-tableMoney);
-
+            winners.get(i).messageToSelf("You have won the round, and that gives you the right to receive "+tableMoney+"\n");
         }
 
     }
@@ -148,5 +146,6 @@ public class House {
         }
 
         checkWhoWon();
+        shuffleDeck();
     }
 }
