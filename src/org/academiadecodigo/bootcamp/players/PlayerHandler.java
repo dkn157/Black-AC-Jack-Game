@@ -29,19 +29,18 @@ public class PlayerHandler extends Gamer implements Runnable {
 
 
     public PlayerHandler(Socket clientSocket, House house) {
-        this.clientSocket = clientSocket;
+        synchronized (house.getPlayerList()) {
+            this.clientSocket = clientSocket;
+            roundIsRunning = true;
+            this.house = house;
+            playerHand = new LinkedList<>();
+            amountOfCardsHeld = 0;
             try {
                 prompt = new Prompt(clientSocket.getInputStream(), new PrintStream(clientSocket.getOutputStream()));
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        makeIntroduction();
-
-        synchronized (house.getPlayerList()) {
-            roundIsRunning = true;
-            this.house = house;
-            playerHand = new LinkedList<>();
-            amountOfCardsHeld = 0;
+            makeIntroduction();
         }
     }
 
