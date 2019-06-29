@@ -29,6 +29,7 @@ public class PlayerHandler extends Gamer implements Runnable {
 
 
     public PlayerHandler(Socket clientSocket, House house) {
+        makeIntroduction();
         synchronized (house.getPlayerList()) {
             this.clientSocket = clientSocket;
             roundIsRunning = true;
@@ -40,7 +41,6 @@ public class PlayerHandler extends Gamer implements Runnable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            makeIntroduction();
         }
     }
 
