@@ -40,7 +40,7 @@ public class House {
             synchronized (this) {
                 synchronized (playerList) {
 
-                    while (playerList.size() > 1) {
+                    while (playerList.size() > 3) {
 
 
 
