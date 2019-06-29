@@ -1,6 +1,6 @@
 package org.academiadecodigo.bootcamp.deck;
 
-
+// TODO: 29/06/2019 Player decide ACE value 1
 public enum Ranks {
     ACE(1),
     TWO(2),

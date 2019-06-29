@@ -22,33 +22,42 @@ public class House {
 
 
     public House() {
+
         tableMoney = 0;
         playerList = new LinkedList<>();
         deck = new Deck();
+
     }
-
-
-
-    public LinkedList<PlayerHandler> getPlayerList() {
-        return playerList;
-    }
-
-
 
     public void init() throws IOException {
 
         ExecutorService fixedPool = Executors.newFixedThreadPool(1500);
         serverSocket = new ServerSocket(myPort);
 
-
         while (true) {
 
-            Socket clientSocket =serverSocket.accept();
+            Socket clientSocket = serverSocket.accept();
 
-            PlayerHandler playerHandler = new PlayerHandler(clientSocket,this);
+            PlayerHandler playerHandler = new PlayerHandler(clientSocket, this);
             fixedPool.submit(playerHandler);
             playerList.add(playerHandler);
 
+            synchronized (this) {
+                synchronized (playerList) {
+
+                    while (playerList.size() > 1) {
+
+                        for (int i = 0; i < playerList.size(); i++) {
+                            playerList.get(i).playerRound();
+                        }
+
+                        checkWhoWon();
+
+                        //botar menu p ver quem quer mais
+
+                    }
+                }
+            }
         }
     }
 
@@ -61,10 +70,73 @@ public class House {
     }
 
     public void setTableMoney(int betMoney) {
-        this.tableMoney+=betMoney;
+        this.tableMoney += betMoney;
     }
 
     public Card givePlayerCard() {
         return deck.drawCard();
+    }
+
+    public LinkedList<PlayerHandler> getPlayerList() {
+        return playerList;
+    }
+
+    public void checkWhoWon() {
+
+        LinkedList<Integer> scores = new LinkedList<>();
+
+        for (int i = 0; i < playerList.size(); i++) {
+
+            scores.add(playerList.get(i).getHandValue());
+
+        }
+
+        int maxScore = 0;
+        int drawChecker = 0;
+        LinkedList<PlayerHandler> winners = new LinkedList<>();
+
+        for (int i = 0; i < playerList.size(); i++) {
+
+            if (scores.get(i) > maxScore) {
+                maxScore = scores.get(i);
+                drawChecker = 1;
+                clearLinkedList(winners);
+                winners.add(playerList.get(i));
+
+            } else if (scores.get(i) == maxScore) {
+                winners.add(playerList.get(i));
+                drawChecker++;
+            }
+        }
+
+        tableMoney = (int) (tableMoney / winners.size());
+
+        for (int i = 0; i < winners.size(); i++) {
+
+            winners.get(i).bet(-tableMoney);
+
+        }
+
+    }
+
+    public void clearLinkedList(LinkedList whatToClear) {
+        for (int i = 0; i < whatToClear.size(); i++) {
+            whatToClear.removeLast();
+        }
+    }
+
+    public boolean arePlayersReady() {
+
+        boolean theyAreReady;
+        theyAreReady = true;
+
+        for ( int i = 0; i < playerList.size(); i++) {
+            if (!playerList.get(i).isReadyToPlay()) {
+                theyAreReady = false;
+            }
+        }
+
+        return theyAreReady;
+
     }
 }

@@ -51,4 +51,8 @@ public abstract class Gamer {
     public void resetHand() {
         handValue = 0;
     }
+
+    public void setHandValue(int howMuch) {
+        handValue = howMuch;
+    }
 }
