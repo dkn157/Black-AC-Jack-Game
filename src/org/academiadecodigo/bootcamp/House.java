@@ -52,7 +52,6 @@ public class House {
                         }
 
                         checkWhoWon();
-
                         //botar menu p ver quem quer mais
 
                     }
