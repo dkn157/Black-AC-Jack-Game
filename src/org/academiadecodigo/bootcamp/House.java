@@ -1,5 +1,7 @@
 package org.academiadecodigo.bootcamp;
 
+import org.academiadecodigo.bootcamp.deck.Card;
+import org.academiadecodigo.bootcamp.deck.Deck;
 import org.academiadecodigo.bootcamp.players.PlayerHandler;
 
 import java.io.IOException;
@@ -14,11 +16,15 @@ public class House {
     private ServerSocket serverSocket;
     private int myPort = 8080;
     private LinkedList<PlayerHandler> playerList;
+    private Deck deck;
+    private int tableMoney;
 
 
 
     public House() {
+        tableMoney = 0;
         playerList = new LinkedList<>();
+        deck = new Deck();
     }
 
 
@@ -39,10 +45,26 @@ public class House {
 
             Socket clientSocket =serverSocket.accept();
 
-            PlayerHandler playerHandler = new PlayerHandler(clientSocket);
+            PlayerHandler playerHandler = new PlayerHandler(clientSocket,this);
             fixedPool.submit(playerHandler);
             playerList.add(playerHandler);
 
         }
+    }
+
+    public void shuffleDeck() {
+        deck.shuffleDeck();
+    }
+
+    public int getTableMoney() {
+        return tableMoney;
+    }
+
+    public void setTableMoney(int betMoney) {
+        this.tableMoney+=betMoney;
+    }
+
+    public Card givePlayerCard() {
+        return deck.drawCard();
     }
 }

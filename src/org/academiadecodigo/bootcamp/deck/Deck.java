@@ -11,6 +11,20 @@ public class Deck {
     public Deck() {
 
         deck = new LinkedList<>();
+        shuffleDeck();
+
+    }
+
+    public Card drawCard() {
+
+        int whichCard = (int)(Math.random()*deck.size());
+        Card cardDrawned = deck.get(whichCard);
+        deck.remove(whichCard);
+        return cardDrawned;
+
+    }
+
+    public void shuffleDeck() {
 
         for ( int i = 0; i< Suits.values().length;i++) {
 

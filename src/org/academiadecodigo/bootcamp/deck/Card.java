@@ -2,12 +2,21 @@ package org.academiadecodigo.bootcamp.deck;
 
 public class Card {
 
-    private String rank;
+    private String thisCard;
+    private Ranks rank;
 
     public Card(Suits whichSuit, Ranks whichRank){
 
-        rank = whichRank.toString()+" of "+whichSuit.toString();
+        thisCard = whichRank.toString()+" of "+whichSuit.toString();
         //System.out.println(rank);
+        rank = whichRank;
+    }
 
+    public Ranks getRank() {
+        return rank;
+    }
+
+    public String getThisCard() {
+        return thisCard;
     }
 }
