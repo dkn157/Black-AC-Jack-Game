@@ -9,10 +9,17 @@ public class Main {
     public static void main(String[] args) {
 
         Deck test = new Deck();
-        House house = new House();
+        House house = null;
+        try {
+            house = new House();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         try {
             house.init();
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
 

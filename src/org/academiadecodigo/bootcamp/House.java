@@ -18,36 +18,49 @@ public class House {
     private LinkedList<PlayerHandler> playerList;
     private Deck deck;
     private int tableMoney;
-    ExecutorService fixedPool;
+    private boolean theyAreReady;
+    private ExecutorService fixedPool;
 
 
-
-    public House() {
+    public House() throws IOException {
 
         tableMoney = 0;
         playerList = new LinkedList<>();
         deck = new Deck();
-
-    }
-
-    public void init() throws IOException {
-
         fixedPool = Executors.newFixedThreadPool(1500);
         serverSocket = new ServerSocket(myPort);
 
+    }
+
+    public void init() throws IOException, InterruptedException {
+
         while (true) {
+
             listening();
-            synchronized (this) {
-                synchronized (playerList) {
+            System.out.println("vamos ver se passa o playerready");
 
-                    while (playerList.size() > 3) {
+            synchronized (playerList) {
+                //while (arePlayersReady()) {
+                    //synchronized (this) {
+                    while (!arePlayersReady()) {
+                        arePlayersReady();
+                    }
+                    //wait();
+                    if (arePlayersReady()) {
+                    System.out.println("passou o allplayersready?");
 
+                        if (playerList.size() > 1) {
+                            System.out.println("AQUI PORRA FDP");
 
+                            doARound();
+                            //botar menu p ver quem quer mais
 
-                        //botar menu p ver quem quer mais
+                        }
 
                     }
-                }
+
+                //}
+                //}
             }
         }
     }
@@ -117,33 +130,47 @@ public class House {
     }
 
     public boolean arePlayersReady() {
+        synchronized (playerList) {
+            System.out.println("esta testando o player ready");
 
-        boolean theyAreReady;
-        theyAreReady = true;
+            theyAreReady = true;
 
-        for ( int i = 0; i < playerList.size(); i++) {
-            if (!playerList.get(i).isReadyToPlay()) {
-                theyAreReady = false;
+            System.out.println(" começa com" + theyAreReady);
+            for (int i = 0; i < playerList.size(); i++) {
+                if (!playerList.get(i).isReadyToPlay()) {
+
+                    theyAreReady = false;
+                    System.out.println("atualmente esta " + theyAreReady + " para " + playerList.get(i).getName());
+                }
             }
+            System.out.println("o stat final ficou como " + theyAreReady);
+            //notifyAll();
+            return theyAreReady;
         }
-
-        return theyAreReady;
-
     }
 
     public void listening() throws IOException {
-        Socket clientSocket = serverSocket.accept();
 
+        Socket clientSocket = serverSocket.accept();
         PlayerHandler playerHandler = new PlayerHandler(clientSocket, this);
+        playerHandler.messageToSelf("   ___   ______   ____  __           __       __           __  \n" +
+                "   /   | / ____/  / __ )/ /___ ______/ /__    / /___ ______/ /__\n" +
+                "  / /| |/ /      / __  / / __ `/ ___/ //_/_  / / __ `/ ___/ //_/\n" +
+                " / ___ / /___   / /_/ / / /_/ / /__/ ,< / /_/ / /_/ / /__/ ,<   \n" +
+                "/_/  |_\\____/  /_____/_/\\__,_/\\___/_/|_|\\____/\\__,_/\\___/_/|_|  \n" +
+                "                                                                \n");
         fixedPool.submit(playerHandler);
         playerList.add(playerHandler);
+
     }
 
     public void doARound() throws IOException {
+
         for (int i = 0; i < playerList.size(); i++) {
             playerList.get(i).playerRound();
         }
 
         checkWhoWon();
+
     }
 }
