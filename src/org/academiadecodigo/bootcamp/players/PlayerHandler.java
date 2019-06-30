@@ -47,14 +47,11 @@ public class PlayerHandler extends Gamer implements Runnable {
     public void run() {
 
         synchronized (house) {
-            makeIntroduction();
 
             //todo colocar menu entrar/sair
             resetHand();
             //todo dar um jeito de só deixar entrar com round começando
         }
-
-
     }
 
     private void playerMakeChoice() throws IOException {
@@ -76,7 +73,6 @@ public class PlayerHandler extends Gamer implements Runnable {
                     setHandValue(0);
 
                 }
-
                 break;
             case 2:
                 stillWantToBuy = false;

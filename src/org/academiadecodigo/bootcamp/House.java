@@ -37,21 +37,24 @@ public class House {
 
         while (true) {
 
-            listening();
+         //  while (playerList.size()>=2) {
+               joinGame();
 
 
-            synchronized (this) {
-                synchronized (playerList) {
+               synchronized (this) {
+                   synchronized (playerList) {
 
-                    if (playerList.size() >= 2) {
 
-                        doARound();
+                       if (playerList.size() >= 2) {
 
-                    }
-                }
-                }
-            }
+                           doARound();
+
+                       }
+                   }
+               }
+           }
         }
+
   //  }
 
     public void shuffleDeck() {
@@ -133,9 +136,8 @@ public class House {
 
     }
 
-    public void listening() throws IOException {
+    public void joinGame() throws IOException {
         Socket clientSocket = serverSocket.accept();
-
         PlayerHandler playerHandler = new PlayerHandler(clientSocket, this);
         playerHandler.messageToSelf(" __      __  ___ ___ .___.____     ___________    .___.__  .__                      \n" +
                 "/  \\    /  \\/   |   \\|   |    |    \\_   _____/  __| _/|  | |__| ____    ____  ______\n" +
@@ -151,7 +153,8 @@ public class House {
                 "        \\/          \\/     \\/     \\/             \\/     \\/     \\/                   \n");
         fixedPool.submit(playerHandler);
         playerList.add(playerHandler);
-        
+        playerHandler.makeIntroduction();
+
     }
 
     public void doARound() throws IOException {
