@@ -287,16 +287,26 @@ public class PlayerHandler extends Gamer implements Runnable {
         switch (answerChoice) {
             case 1:
                 messageToSelf("With animal instinct, you left the table with that sweet pie. " +
-                        "However, she makes you pay for huncka huncka, plus the room");
-                messageToAll(getName() + " left the table with a fine real woman and a bump in his pants");
+                        "However, she makes you pay for huncka huncka, plus the room\n");
+                messageToAll(getName() + " left the table with a fine real woman and a bump in his pants\n");
                 int bill = ROOM_COST+GIRL_COST;
                 pay(bill);
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 messageToSelf("\nYou had some bills to pay: "+ "Total: " + bill + " (Room: " + ROOM_COST + " / Girl: " + GIRL_COST+")");
                 messageToSelf("\nYour current balance is: " + getMoney());
                 break;
 
             case 2:
                 messageToSelf("\nNo thanks bitch! I'm here to make money!\n");
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 messageToSelf("\nGirl: You will regret this, I could make all your dreams come true\n");
                 messageToAll("\nBitches are crawling around the table... Hold your pants boys! "
                         + getName() + " can be a disguised pussy!\n");
@@ -321,6 +331,11 @@ public class PlayerHandler extends Gamer implements Runnable {
 
                 this.setMoney(getMoney() + SHEMALE_MONEY);
                 messageToSelf("You chose, literally, the hard way... Brave soldier");
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 messageToSelf("\n Your dignity earned you a total of: "+SHEMALE_MONEY);
                 messageToSelf("\nYour current balance is: "+getMoney());
                 messageToSelf("\n\n\n..ooo*\"\"\"**ooooo .oo*\"\"*ooo..\n" +
@@ -350,6 +365,7 @@ public class PlayerHandler extends Gamer implements Runnable {
                         "                o                    o                 o\n");
                 messageToAll(getName() + " leaves the table, heading into a dark room with some suspicious shemales");
 
+                // TODO: 30/06/2019 case2:
         }
     }
 
@@ -365,6 +381,11 @@ public class PlayerHandler extends Gamer implements Runnable {
         switch (answerChoice) {
             case 1:
                 messageToSelf("\nRight away you drunk fool");
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 messageToSelf("\n\n\n     |    |\n" +
                                             "        |    |\n" +
                                                 "    |____|\n" +
@@ -394,6 +415,11 @@ public class PlayerHandler extends Gamer implements Runnable {
                 messageToAll(getName()+ " just asked for a glass of tap water. AHAHAHHA\n");
                 messageToSelf("\nYou should be ashamed of yourself... tap Water\n?");
                 messageToSelf("\nEveryone will know how cheapskate you are\n");
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 messageToSelf("\n For being ridiculous, you will have to pay for this. Total cost: " + WATER_COST+".");
                 pay(DRINK_COST);
                 messageToSelf("\nYour current balance is "+ getMoney());
