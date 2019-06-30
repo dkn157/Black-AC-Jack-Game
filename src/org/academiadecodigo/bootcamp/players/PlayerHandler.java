@@ -1,6 +1,5 @@
 package org.academiadecodigo.bootcamp.players;
 
-import org.academiadecodigo.bootcamp.Choice;
 import org.academiadecodigo.bootcamp.House;
 import org.academiadecodigo.bootcamp.Prompt;
 import org.academiadecodigo.bootcamp.deck.Card;
@@ -25,7 +24,6 @@ public class PlayerHandler extends Gamer implements Runnable {
     private int amountOfCardsHeld;
     private boolean stillWantToBuy;
     public boolean readyToPlay;
-    private Choice choice;
 
 
     public PlayerHandler(Socket clientSocket, House house) {
@@ -35,7 +33,7 @@ public class PlayerHandler extends Gamer implements Runnable {
             this.house = house;
             playerHand = new LinkedList<>();
             amountOfCardsHeld = 0;
-            choice=new Choice(this);
+            this.getStartingMoney();
             try {
                 prompt = new Prompt(clientSocket.getInputStream(), new PrintStream(clientSocket.getOutputStream()));
             } catch (IOException e) {
@@ -206,13 +204,15 @@ public class PlayerHandler extends Gamer implements Runnable {
 
 
         //resetPlayerCards();
+        int random = (int) (Math.random()*100);
+        System.out.println("Random number: " + random);
 
-        if (getMoney()<2) {
-            choice.earnMoney();
+        if (getMoney()<4 && random<50) {
+            earnMoney();
         }
 
-        if (getMoney()>=8) {
-            choice.girlAppears();
+        if(getMoney()>8 && random<50) {
+            girlAppears();
         }
     }
 
@@ -221,6 +221,119 @@ public class PlayerHandler extends Gamer implements Runnable {
         return readyToPlay;
     }
 
+
+    // Hooker method. Should be prompt to player if money is high
+    public void girlAppears() throws IOException {
+
+        String[] options = {"Go with her", "Hell no! I'm gambling"};
+
+        MenuInputScanner scanner = new MenuInputScanner(options);
+        scanner.setMessage("A girl appears next to you, inviting you to check-in into a room" +
+                "       .-'\"\"\"''---.___\n" +
+                "           .'               \"'-.___\n" +
+                "         _'              _'-\"'\"\"\"  \"\"\"-\n" +
+                "        /    7        .'\"              \"->\n" +
+                "       .    .|     _-'                   '.\n" +
+                "      .  .'\"  :   '.         _.------._  ''\n" +
+                "     .  -      . .'       .-'  \"-   .' \\ :\n" +
+                "     | '        >       .'.''\"\\\"-   .'\\\"_'\n" +
+                "     |'        <      .'   :__/  : :_.':'\n" +
+                "  .--'-._      :   .--:     -._.'  '._.'\n" +
+                " '>      '.     '. | '              .' :\n" +
+                "'.        :'     '-'.____        .__.  '\n" +
+                " /         :             :.          .'\n" +
+                " \\.       /              | '\"-_  __-'\n" +
+                "   \\.'-'\"'         .'\"\":''    :-\"\"\"\"'.\n" +
+                "                  :   :               .\n" +
+                "                  |  :                :\n" +
+                "                  | :           .''.  :\n" +
+                "                  |.'.        _.:   '.:\n" +
+                "                  |    '---'\"\"  :    :\"\n" +
+                "                  |     '      :     :\n" +
+                "                  .'.___:._   .'    .\n" +
+                "                   .  '    '\"'.     '\n" +
+                "                   |   :      '    :\n" +
+                "                   :    .    :    ' :\n" +
+                "     _.-'\"'--..__   :   : . :    .  _:\n" +
+                "  .'      .       \"-:   :   '   ..-\"  :\n" +
+                " (         '-       :   :._:   /   _.--\"\"\"--._\n" +
+                "  '          '. _....:  : .   / .-'           '.\n" +
+                "   '           :  .\"\" \"\"'-'  /-\"               )\n" +
+                "    '._        :  :     ..-'                  /\n" +
+                "       '-._     \\'' _ .'\"\"\"\"\"\"'-.         _.-\n" +
+                "          .'--.__ .' '           - ____.-'\n" +
+                "         :         \"\":-.._______.'\n" +
+                "          '-.....-'''                Hello honey, wanna party?");
+        int answerChoice = prompt.getUserInput(scanner);
+
+        switch (answerChoice) {
+            case 1:
+                messageToSelf("With animal instinct, you left the table with that sweet pie. " +
+                        "However, she makes you pay for huncka huncka, plus the room");
+                messageToAll(getName() + " left the table with a fine real woman and a bump in his pants");
+                readyToPlay = false;
+                int roomCost = 3;
+                int girlCost = 3;
+                pay(roomCost + girlCost);
+                messageToSelf("\nYou had some bills to pay: " + "Room: " + roomCost + " / Girl: " + girlCost);
+                messageToSelf("\nYour current balance is: " + getMoney());
+
+
+            case 2:
+                messageToSelf("\nNo thanks bitch! I'm here to make money!\n");
+                messageToSelf("\nGirl: You will regret this, I could make all your dreams come true\n");
+                messageToAll("\nBitches are crawling around the table... Hold your pants boys! "
+                        + getName() + " can be a disguised pussy!\n");
+                break;
+        }
+    }
+
+    //earn money method. should be prompt to player if money is low
+    public void earnMoney() throws IOException {
+
+        String[] options = {"Fuck it. I really need money to gamble", "My dignity is more important"};
+
+        MenuInputScanner scanner = new MenuInputScanner(options);
+        scanner.setMessage("\nSince you are low on coins, a group of big boys approaches you with a proposition." +
+                " Do you want to join them in the dark room?" +
+
+
+        int answerChoice = prompt.getUserInput(scanner);
+
+        switch (answerChoice) {
+            case 1:
+                int earnedCoins = 6;
+                this.setMoney(earnedCoins);
+                messageToSelf("You chose, literally, the hard way... Brave soldier");
+                messageToSelf(" \n              ..ooo*\"\"\"**ooooo .oo*\"\"*ooo..\n" +
+                        "             .  oo*\"           \"*o.oo*\"           \"*o.\n" +
+                        "            . o\"                   'o\"                  \"o\n" +
+                        "             o                      o                     *o\n" +
+                        "           .o                       o                        'o\n" +
+                        "           o                        o                          o.\n" +
+                        "          o                          o                          o\n" +
+                        "         o                          \\o/                         o\n" +
+                        "         o                        -(    )-                         o\n" +
+                        "         o.                         /o\\                         .o\n" +
+                        "         \"o                          o                           o\n" +
+                        "          oo                         o                          oo\n" +
+                        "          oo.                       oo                        oo\n" +
+                        "           'ooo.                  .oo.                     ooo\n" +
+                        "            \"o \"\"oo,,        ,,oO-'Oo,       ,,,,,,..oo\"o\n" +
+                        "             o.         \"\"\"\"\"\"    oo       \"\"\"\"\"        .o\n" +
+                        "             'o                    oo                    o'\n" +
+                        "             *o                    oo                    o\n" +
+                        "              'o                    o                    o\n" +
+                        "              o                     o                   o\n" +
+                        "               o                    o                  o\n" +
+                        "               o                    o                 o\n" +
+                        "               o                    o                 o\n" +
+                        "                o                    o                 o\n" +
+                        "                o                    o                 o\n");
+                messageToAll(getName() + " leaves the table, heading into a dark room with some suspicious shemales");
+
+        }
+    }
 
 
 
