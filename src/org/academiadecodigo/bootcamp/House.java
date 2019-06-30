@@ -34,7 +34,7 @@ public class House {
         deck = new Deck();
         gameOver = false;
         roundCounter = 0;
-        rounds = 1;
+        rounds = 2;
 
     }
 
@@ -98,22 +98,25 @@ public class House {
 
         for (int i = 0; i < playerList.size(); i++) {
 
+            String winnersNames = new String();
+
             if (playerList.get(i).getHandValue() != maxScore) {
 
-                String winnersNames = new String();
 
                 for (int j = 0; j < winners.size(); j++) {
                     winnersNames += winners.get(j).getName() + " ";
                 }
-                playerList.get(0).messageToEveryoneEvenMe("\n-------- Hand Winner: " + winnersNames + "--------\n");
 
+                playerList.get(0).messageToEveryoneEvenMe("\n------------- Hand Winner: " + winnersNames + "-------------\n");
             }
+
+
 
         }
         for (int i = 0; i < winners.size(); i++) {
 
             winners.get(i).pay(-tableMoney);
-            winners.get(i).messageToSelf("\n$$$$$$    You have won the round!!    $$$$$$\n");
+            winners.get(i).messageToSelf("\n$$$$$$$$$$$$$    You have won the round!!    $$$$$$$$$$$$$$\n");
         }
 
         tableMoney = 0;
@@ -220,7 +223,7 @@ public class House {
 
         for (int i = 0; i < playerList.size(); i++) {
             if (playerList.get(i).getMoney() == overallMaxMoney) {
-                thisWillBeReturned += playerList.get(i).getName() + " finished the game with the highest amount of money equivalent to " + playerList.get(i).getMoney() + "\n";
+                thisWillBeReturned += "\n" + playerList.get(i).getName() + " finished the game with: " + playerList.get(i).getMoney() + "\n";
             }
         }
 
@@ -246,7 +249,7 @@ public class House {
 
                 for (int i = 1; i < playerList.size(); i++) {
 
-                    playerList.get(i).messageToSelf("\nWanting for your turn!!\n");
+                    playerList.get(i).messageToSelf("\nWaiting for your turn!!\n");
                 }
 
                 startRound();
@@ -304,11 +307,11 @@ public class House {
         playerList.get(0).messageToEveryoneEvenMe(podiumMessage());
 
         for (int i = 0; i < playerList.size(); i++) {
-            playerList.get(i).messageToSelf("\nYou finished the game with an amount of money equal to " + playerList.get(i).getMoney() + ".\n");
+            playerList.get(i).messageToSelf("\nYou finished the game with: " + playerList.get(i).getMoney() + ".\n");
             playerList.get(i).messageToSelf("\nSo, as you might have noticed, not everything here is exactly legal." +
-                    "The police shows up, AGAIN, and everyone has to clear out. Go home, rest, and if you feel like it, come back tomorrow.\n");
+                    "The police shows up, AGAIN, and everyone has to CLEAR OUT. Go home, rest, and if you feel like it, come back tomorrow.\n");
         }
-        Thread.sleep(5000);
+        Thread.sleep(6000);
     }
 
     public void removePlayer(PlayerHandler playerHandler) {

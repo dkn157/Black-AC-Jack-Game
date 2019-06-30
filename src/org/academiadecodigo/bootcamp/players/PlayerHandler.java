@@ -71,24 +71,30 @@ public class PlayerHandler extends Gamer implements Runnable {
         String[] options = {"Hit me", "Stand"};
 
         MenuInputScanner scanner = new MenuInputScanner(options);
-        scanner.setMessage("Do you want to buy a card?");
+        scanner.setMessage("\nDo you want to buy a card?");
         int answerChoice = prompt.getUserInput(scanner);
 
         switch (answerChoice) {
             case 1:
                 drawCard();
-                messageToAll(getName() + " has bought a card.\n");
+                messageToAll("\n" + getName() + " has bought a card.\n");
                 if (getHandValue() > 21) {
                     stillWantToBuy = false;
-                    messageToAll(getName() + " will not buy more cards.\n");
-                    messageToSelf("You have been busted.\n");
+
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    messageToAll("\n" + getName() + " will not buy more cards.\n");
+                    messageToSelf("     YOU HAVE BEEN BUSTED!!\n");
                     setHandValue(0);
 
                 }
                 break;
             case 2:
                 stillWantToBuy = false;
-                messageToAll(getName() + " will not buy more cards.\n");
+                messageToAll("\n" + getName() + " will not buy more cards.\n");
                 break;
         }
 
@@ -109,11 +115,11 @@ public class PlayerHandler extends Gamer implements Runnable {
         playerHand.add(house.givePlayerCard());
         increaseHandValue(playerHand.get(amountOfCardsHeld - 1).getRank().getValue());
 
-        System.out.println(getName() + " card draw " + playerHand.get(amountOfCardsHeld - 1).getThisCard());
-        System.out.println(getName() + "hand value: " + getHandValue());
+        System.out.println("Card draw:  " + playerHand.get(amountOfCardsHeld - 1).getThisCard() + "   Hand value:  " + getHandValue());
+       // System.out.println(getName() + "hand value: " + getHandValue());
         System.out.println("\n _______________________________________");
-        messageToSelf(getName() + " card draw " + playerHand.get(amountOfCardsHeld - 1).getThisCard() + "\n");
-        messageToSelf(getName() + "hand value: " + getHandValue() + "\n");
+        messageToSelf("\nCard draw: " + playerHand.get(amountOfCardsHeld - 1).getThisCard() + "   Hand value: " + getHandValue());
+        //messageToSelf(getName() + "hand value: " + getHandValue() + "\n");
     }
 
     public synchronized void idQuestion() throws IOException, InterruptedException {
@@ -420,17 +426,16 @@ public class PlayerHandler extends Gamer implements Runnable {
                 break;
 
             case 2:
-                messageToAll(getName()+ " just asked for a glass of tap water. AHAHAHHA\n");
-                messageToSelf("\nYou should be ashamed of yourself... tap Water\n?");
-                messageToSelf("\nEveryone will know how cheapskate you are\n");
+                messageToAll("\n" + getName()+ " just asked for a glass of tap water. AHAHAHHA\n");
+                messageToSelf("\nYou should be ashamed of yourself...tap Water? Everyone will know how cheapskate you are\n");
                 try {
                     Thread.sleep(2000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                messageToSelf("\n For being ridiculous, you will have to pay for this. Total cost: " + WATER_COST+".");
+                messageToSelf("\nFor being ridiculous, you will have to pay for this. Total cost: " + WATER_COST+".");
                 pay(DRINK_COST);
-                messageToSelf("\nYour current balance is "+ getMoney());
+                messageToSelf("Current balance is "+ getMoney() + "\n");
 
 
 
