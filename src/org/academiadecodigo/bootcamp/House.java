@@ -44,13 +44,20 @@ public class House {
          //  if (playerList.size()>=2) {
                joinGame();
 
+               while (arePlayersReady()) {
 
+                   try {
+                       wait();
+                   } catch (InterruptedException e) {
+                       e.printStackTrace();
+                   }
+
+               }
 
                synchronized (this) {
                    synchronized (playerList) {
 
-
-                       if (playerList.size() >= 2) {
+                       if (playerList.size() > 2 /*&& arePlayersReady()*/) {
 
                            while (!gameOver) {
                                startRound();
@@ -131,10 +138,13 @@ public class House {
 
         boolean theyAreReady;
         theyAreReady = true;
-
+        System.out.println("They are ready is "+theyAreReady);
         for ( int i = 0; i < playerList.size(); i++) {
+            System.out.println("instancing theyareready as "+theyAreReady);
             if (!playerList.get(i).isReadyToPlay()) {
+                System.out.println("atm theyareready is "+theyAreReady);
                 theyAreReady = false;
+                System.out.println("and it was changed to "+theyAreReady);
             }
         }
 
@@ -159,8 +169,9 @@ public class House {
                 " |______  /____(____  /\\___  >__|_ \\________(____  /\\___  >__|_ \\                   \n" +
                 "        \\/          \\/     \\/     \\/             \\/     \\/     \\/                   \n");
         fixedPool.submit(playerHandler);
-        playerList.add(playerHandler);
         playerHandler.idQuestion();
+
+        playerList.add(playerHandler);
 
     }
 
