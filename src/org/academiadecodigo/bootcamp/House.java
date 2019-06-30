@@ -8,10 +8,12 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.LinkedList;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class House {
+public class House implements Runnable {
 
     private ServerSocket serverSocket;
     private int myPort = 8080;
@@ -21,7 +23,7 @@ public class House {
     private ExecutorService fixedPool;
     private boolean gameOver;
     private int roundCounter;
-
+    private boolean readyToPlay;
 
 
     public House() {
@@ -39,42 +41,11 @@ public class House {
         fixedPool = Executors.newFixedThreadPool(1500);
         serverSocket = new ServerSocket(myPort);
 
-        while (true) {
-
-         //  if (playerList.size()>=2) {
-               joinGame();
-
-               while (arePlayersReady()) {
-
-                   try {
-                       wait();
-                   } catch (InterruptedException e) {
-                       e.printStackTrace();
-                   }
-
-               }
-
-               synchronized (this) {
-                   synchronized (playerList) {
-
-                       if (playerList.size() > 2 /*&& arePlayersReady()*/) {
-
-                           while (!gameOver) {
-                               startRound();
-                               roundCounter++;
-                               if (roundCounter == 3) {
-                                   gameOver = true;
-                               }
-                           }
-
-                           playerList.get(0).messageToEveryoneEvenMe(podiumMessage());
-                       }
-                   }
-               }
-           }
+        while (serverSocket.isBound()) {
+            joinGame(); //verificar se mudou
         }
 
-  //  }
+    }
 
     public void shuffleDeck() {
         deck.shuffleDeck();
@@ -126,7 +97,7 @@ public class House {
         for (int i = 0; i < winners.size(); i++) {
 
             winners.get(i).pay(-tableMoney);
-            winners.get(i).messageToSelf("You have won the round!! total income is: "+tableMoney+"\n");
+            winners.get(i).messageToSelf("You have won the round!! total income is: " + tableMoney + "\n");
         }
     }
 
@@ -140,13 +111,13 @@ public class House {
 
         boolean theyAreReady;
         theyAreReady = true;
-        System.out.println("They are ready is "+theyAreReady);
-        for ( int i = 0; i < playerList.size(); i++) {
-            System.out.println("instancing theyareready as "+theyAreReady);
+        System.out.println("They are ready is " + theyAreReady);
+        for (int i = 0; i < playerList.size(); i++) {
+            System.out.println("instancing theyareready as " + theyAreReady);
             if (!playerList.get(i).isReadyToPlay()) {
-                System.out.println("atm theyareready is "+theyAreReady);
+                System.out.println("atm theyareready is " + theyAreReady);
                 theyAreReady = false;
-                System.out.println("and it was changed to "+theyAreReady);
+                System.out.println("and it was changed to " + theyAreReady);
             }
         }
 
@@ -158,6 +129,7 @@ public class House {
 
         Socket clientSocket = serverSocket.accept();
         PlayerHandler playerHandler = new PlayerHandler(clientSocket, this);
+        playerList.add(playerHandler);
         playerHandler.messageToSelf(" __      __  ___ ___ .___.____     ___________    .___.__  .__                      \n" +
                 "/  \\    /  \\/   |   \\|   |    |    \\_   _____/  __| _/|  | |__| ____    ____  ______\n" +
                 "\\   \\/\\/   /    ~    \\   |    |     |    __)_  / __ | |  | |  |/    \\  / ___\\/  ___/\n" +
@@ -171,9 +143,8 @@ public class House {
                 " |______  /____(____  /\\___  >__|_ \\________(____  /\\___  >__|_ \\                   \n" +
                 "        \\/          \\/     \\/     \\/             \\/     \\/     \\/                   \n");
         fixedPool.submit(playerHandler);
-        playerHandler.idQuestion();
+        //playerHandler.idQuestion();
 
-        playerList.add(playerHandler);
 
     }
 
@@ -181,8 +152,6 @@ public class House {
         for (int i = 0; i < playerList.size(); i++) {
             playerList.get(i).playerRound();
         }
-
-        checkWhoWon();
         shuffleDeck();
     }
 
@@ -191,25 +160,65 @@ public class House {
         String thisWillBeReturned = new String();
 
         LinkedList<Integer> finalScores = new LinkedList<>();
-
+        int overallMaxMoney = -1;
         for (int i = 0; i < playerList.size(); i++) {
 
             finalScores.add(playerList.get(i).getMoney());
-            //finalScores.listIterator()
+
+            if (playerList.get(i).getMoney() > overallMaxMoney) {
+                overallMaxMoney = playerList.get(i).getMoney();
+            }
         }
 
-
-
+        for ( int i = 0; i < playerList.size();i++) {
+            if ( playerList.get(i).getMoney() == overallMaxMoney) {
+                thisWillBeReturned += playerList.get(i).getName()+" finished the game with the highest amount of money equivalent to "+playerList.get(i).getMoney()+"\n";
+            }
+        }
 
         return thisWillBeReturned;
     }
 
+    public void letsBegin() throws IOException {
+
+        for (int i = 0; i < playerList.size(); i++) {
+            if (!playerList.get(i).isReadyToPlay()) {
+                readyToPlay = false;
+                return;
+            }
+            readyToPlay = true;
+        }
+
+        if (playerList.size() > 1 && readyToPlay == true) {
+
+            while (!gameOver) {
+                startRound();
+                checkWhoWon();
+                roundCounter++;
+                if (roundCounter == 10) {
+                    gameOver = true;
+                }
+            }
+            endingMessages();
 
 
+        }
 
+    }
 
+    public void endingMessages() throws IOException {
+        playerList.get(0).messageToEveryoneEvenMe(podiumMessage());
 
-    } // the end
+        for ( int i = 0; i < playerList.size(); i++) {
+            playerList.get(i).messageToSelf("You finished the game with an amount of money equal to "+playerList.get(i).getMoney()+".\n");
+        }
+    }
+
+    @Override
+    public void run() {
+
+    }
+} // the end
 
 
 

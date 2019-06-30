@@ -40,9 +40,7 @@ public abstract class Gamer {
         this.money += value;
     }
 
-    public void gatherWinnings(int winnings) {
-        money+=winnings;
-    }
+
 
     public void setAge(int age) {
         this.age = age;
