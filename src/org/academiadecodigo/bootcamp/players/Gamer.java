@@ -36,6 +36,10 @@ public abstract class Gamer {
         money-= value;
     }
 
+    public void setMoney(int value) {
+        this.money += value;
+    }
+
     public void gatherWinnings(int winnings) {
         money+=winnings;
     }

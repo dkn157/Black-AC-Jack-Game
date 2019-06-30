@@ -268,7 +268,7 @@ public class PlayerHandler extends Gamer implements Runnable {
     }
 
         //earn money method. should be prompt to player if money is low
-        public void earnMoney() {
+        public void earnMoney() throws IOException {
 
             String[] options = {"Fuck it. I really need money to gamble", "My dignity is more important"};
 
@@ -300,7 +300,20 @@ public class PlayerHandler extends Gamer implements Runnable {
                     "               o                    o                 o\n" +
                     "                o                    o                 o\n" +
                     "                o                    o                 o\n");
-        }
+
+            int answerChoice = prompt.getUserInput(scanner);
+
+            switch (answerChoice) {
+                case 1:
+                    readyToPlay = false;
+                    int earnedCoins = 10;
+                    this.setMoney(earnedCoins);
+                    messageToSelf("You chose, literally, the hard way... Brave soldier");
+                    messageToAll(getName() + " leaves the table, heading into a dark room with some suspicious shemales");
+
+            }
+
+    }
 
 
 
