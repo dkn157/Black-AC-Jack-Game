@@ -32,8 +32,8 @@ public abstract class Gamer {
         return handValue;
     }
 
-    public void bet(int bet) {
-        money-= bet;
+    public void pay(int value) {
+        money-= value;
     }
 
     public void gatherWinnings(int winnings) {

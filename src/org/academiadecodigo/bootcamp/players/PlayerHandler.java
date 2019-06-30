@@ -9,9 +9,7 @@ import org.academiadecodigo.bootcamp.scanners.menu.MenuInputScanner;
 import org.academiadecodigo.bootcamp.scanners.string.StringInputScanner;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.PrintStream;
-import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.LinkedList;
 
@@ -96,13 +94,15 @@ public class PlayerHandler extends Gamer implements Runnable {
         amountOfCardsHeld++;
         playerHand.add(house.givePlayerCard());
         increaseHandValue(playerHand.get(amountOfCardsHeld - 1).getRank().getValue());
-        System.out.println(getName()+ " card draw " + playerHand.get(amountOfCardsHeld - 1).getThisCard());
-        System.out.println(getName()+ "hand value: " + getHandValue());
-        messageToSelf(getName()+ " card draw " + playerHand.get(amountOfCardsHeld - 1).getThisCard()+"\n");
-        messageToSelf(getName()+ "hand value: " + getHandValue()+"\n");
+
+        System.out.println(getName() + " card draw " + playerHand.get(amountOfCardsHeld - 1).getThisCard());
+        System.out.println(getName() + "hand value: " + getHandValue());
+        System.out.println("\n _______________________________________");
+        messageToSelf(getName() + " card draw " + playerHand.get(amountOfCardsHeld - 1).getThisCard() + "\n");
+        messageToSelf(getName() + "hand value: " + getHandValue() + "\n");
     }
 
-   public synchronized void makeIntroduction() {
+    public synchronized void idQuestion() {
 
         StringInputScanner nameQuestion = new StringInputScanner();
         nameQuestion.setMessage("What is your name?\n");
@@ -114,7 +114,7 @@ public class PlayerHandler extends Gamer implements Runnable {
     }
 
     public void readyMenu() {
-        String[] readyMenu = {"Let´s play!","Exit"};
+        String[] readyMenu = {"Let´s play!", "Exit"};
         MenuInputScanner scanner = new MenuInputScanner(readyMenu);
         scanner.setMessage("Do you want to play some BlackJack?????");
         int answerChoice = prompt.getUserInput(scanner);
@@ -135,11 +135,11 @@ public class PlayerHandler extends Gamer implements Runnable {
     public void makeBet() {
 
         int currentBet = 1;
-        bet(currentBet);
+        pay(currentBet);
         house.setTableMoney(currentBet);
-
     }
 
+    // sends message to all players
     public void messageToAll(String whatToSay) throws IOException {
 
         synchronized (house.getPlayerList()) {
@@ -155,6 +155,7 @@ public class PlayerHandler extends Gamer implements Runnable {
         }
     }
 
+    // sends message to self player
     public void messageToSelf(String whatToSay) throws IOException {
 
         clientSocket.getOutputStream().write(whatToSay.getBytes());
@@ -169,8 +170,8 @@ public class PlayerHandler extends Gamer implements Runnable {
         resetHand();
 
         makeBet();
-        System.out.println(getName()+"current balance: " + getMoney());
-        messageToSelf(getName()+"current balance: " + getMoney()+"\n");
+        System.out.println(getName() + "current balance: " + getMoney());
+        messageToSelf(getName() + "current balance: " + getMoney() + "\n");
         drawCard();
         drawCard();
 
@@ -198,5 +199,81 @@ public class PlayerHandler extends Gamer implements Runnable {
     public boolean isReadyToPlay() {
         return readyToPlay;
     }
-}
 
+
+    public void girlAppears() throws IOException {
+
+        String[] options = {"Go with her", "Hell no! I'm gambling"};
+
+        MenuInputScanner scanner = new MenuInputScanner(options);
+        scanner.setMessage("A girl appears next to you, inviting you to check-in into a room" +
+                "       .-'\"\"\"''---.___\n" +
+                "           .'               \"'-.___\n" +
+                "         _'              _'-\"'\"\"\"  \"\"\"-\n" +
+                "        /    7        .'\"              \"->\n" +
+                "       .    .|     _-'                   '.\n" +
+                "      .  .'\"  :   '.         _.------._  ''\n" +
+                "     .  -      . .'       .-'  \"-   .' \\ :\n" +
+                "     | '        >       .'.''\"\\\"-   .'\\\"_'\n" +
+                "     |'        <      .'   :__/  : :_.':'\n" +
+                "  .--'-._      :   .--:     -._.'  '._.'\n" +
+                " '>      '.     '. | '              .' :\n" +
+                "'.        :'     '-'.____        .__.  '\n" +
+                " /         :             :.          .'\n" +
+                " \\.       /              | '\"-_  __-'\n" +
+                "   \\.'-'\"'         .'\"\":''    :-\"\"\"\"'.\n" +
+                "                  :   :               .\n" +
+                "                  |  :                :\n" +
+                "                  | :           .''.  :\n" +
+                "                  |.'.        _.:   '.:\n" +
+                "                  |    '---'\"\"  :    :\"\n" +
+                "                  |     '      :     :\n" +
+                "                  .'.___:._   .'    .\n" +
+                "                   .  '    '\"'.     '\n" +
+                "                   |   :      '    :\n" +
+                "                   :    .    :    ' :\n" +
+                "     _.-'\"'--..__   :   : . :    .  _:\n" +
+                "  .'      .       \"-:   :   '   ..-\"  :\n" +
+                " (         '-       :   :._:   /   _.--\"\"\"--._\n" +
+                "  '          '. _....:  : .   / .-'           '.\n" +
+                "   '           :  .\"\" \"\"'-'  /-\"               )\n" +
+                "    '._        :  :     ..-'                  /\n" +
+                "       '-._     \\'' _ .'\"\"\"\"\"\"'-.         _.-\n" +
+                "          .'--.__ .' '           - ____.-'\n" +
+                "         :         \"\":-.._______.'\n" +
+                "          '-.....-'''                Hello honey, wanna party?");
+        int answerChoice = prompt.getUserInput(scanner);
+
+        switch (answerChoice) {
+            case 1:
+                messageToSelf("With animal instinct, you left the table with that sweet pie. However, she makes you pay for huncka huncka, plus the room");
+                messageToAll(getName() + " left the table with a fine real woman and a bump in his pants");
+                readyToPlay = false;
+                int roomCost = 3;
+                int girlCost = 3;
+                pay(roomCost + girlCost);
+
+
+            case 2:
+                messageToSelf("No thanks bitch! I'm here to make money!");
+                messageToSelf("Girl: You will regret this, I'm could make all your dreams come true");
+                messageToAll("Bitches are crawling around the table... Hold your pants boys! " + getName() + " can be a disguised pussy!");
+                break;
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+} // the end

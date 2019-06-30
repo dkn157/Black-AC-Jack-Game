@@ -37,8 +37,9 @@ public class House {
 
         while (true) {
 
-         //  while (playerList.size()>=2) {
+         //  if (playerList.size()>=2) {
                joinGame();
+
 
 
                synchronized (this) {
@@ -47,7 +48,7 @@ public class House {
 
                        if (playerList.size() >= 2) {
 
-                           doARound();
+                           startRound();
 
                        }
                    }
@@ -109,10 +110,9 @@ public class House {
 
         for (int i = 0; i < winners.size(); i++) {
 
-            winners.get(i).bet(-tableMoney);
-            winners.get(i).messageToSelf("You have won the round, and that gives you the right to receive "+tableMoney+"\n");
+            winners.get(i).pay(-tableMoney);
+            winners.get(i).messageToSelf("You have won the round!! total income is: "+tableMoney+"\n");
         }
-
     }
 
     public void clearLinkedList(LinkedList whatToClear) {
@@ -153,11 +153,11 @@ public class House {
                 "        \\/          \\/     \\/     \\/             \\/     \\/     \\/                   \n");
         fixedPool.submit(playerHandler);
         playerList.add(playerHandler);
-        playerHandler.makeIntroduction();
+        playerHandler.idQuestion();
 
     }
 
-    public void doARound() throws IOException {
+    public void startRound() throws IOException {
         for (int i = 0; i < playerList.size(); i++) {
             playerList.get(i).playerRound();
         }
@@ -165,4 +165,20 @@ public class House {
         checkWhoWon();
         shuffleDeck();
     }
-}
+
+
+
+
+
+
+    } // the end
+
+
+
+
+
+
+
+
+
+
