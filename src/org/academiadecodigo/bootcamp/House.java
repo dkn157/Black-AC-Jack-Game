@@ -34,7 +34,7 @@ public class House {
         deck = new Deck();
         gameOver = false;
         roundCounter = 0;
-        rounds = 2;
+        rounds = 10;
 
     }
 

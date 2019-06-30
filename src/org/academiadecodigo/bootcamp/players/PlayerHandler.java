@@ -300,9 +300,9 @@ public class PlayerHandler extends Gamer implements Runnable {
 
         switch (answerChoice) {
             case 1:
-                messageToSelf("With animal instinct, you left the table with that sweet pie. " +
+                messageToSelf("\nWith animal instinct, you left the table with that sweet pie. " +
                         "However, she makes you pay for huncka huncka, plus the room\n");
-                messageToAll(getName() + " left the table with a fine real woman and a bump in his pants\n");
+                messageToAll("\n" + getName() + " left the table with a fine real woman and a bump in his pants\n");
                 int bill = ROOM_COST+GIRL_COST;
                 pay(bill);
                 try {
@@ -311,7 +311,7 @@ public class PlayerHandler extends Gamer implements Runnable {
                     e.printStackTrace();
                 }
                 messageToSelf("\nYou had some bills to pay: "+ "Total: " + bill + " (Room: " + ROOM_COST + " / Girl: " + GIRL_COST+")");
-                messageToSelf("\nYour current balance is: " + getMoney());
+                messageToSelf("\nYour current balance is: " + getMoney() + "\n");
                 break;
 
             case 2:
@@ -350,7 +350,7 @@ public class PlayerHandler extends Gamer implements Runnable {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                messageToSelf("\n Your dignity earned you a total of: "+SHEMALE_MONEY);
+                messageToSelf("\nYour dignity earned you a total of: "+SHEMALE_MONEY);
                 messageToSelf("\nYour current balance is: "+getMoney());
                 messageToSelf("\n\n\n..ooo*\"\"\"**ooooo .oo*\"\"*ooo..\n" +
                         "             .  oo*\"           \"*o.oo*\"           \"*o.\n" +
@@ -367,7 +367,7 @@ public class PlayerHandler extends Gamer implements Runnable {
                         "          oo.                       oo                        oo\n" +
                         "           'ooo.                  .oo.                     ooo\n" +
                         "            \"o \"\"oo,,        ,,oO-'Oo,       ,,,,,,..oo\"o\n" +
-                        "             o.         \"\"\"\"\"\"    oo       \"\"\"\"\"        .o\n" +
+                        "             o.         \"\"\"\"\"\"    oo       \"\"\"\"\"      .o\n" +
                         "             'o                    oo                    o'\n" +
                         "             *o                    oo                    o\n" +
                         "              'o                    o                    o\n" +
@@ -377,7 +377,7 @@ public class PlayerHandler extends Gamer implements Runnable {
                         "               o                    o                 o\n" +
                         "                o                    o                 o\n" +
                         "                o                    o                 o\n");
-                messageToAll(getName() + " leaves the table, heading into a dark room with some suspicious shemales");
+                messageToAll("\n" +getName() + " leaves the table, heading into a dark room with some suspicious shemales \n");
 
                 // TODO: 30/06/2019 case2:
         }
@@ -420,9 +420,9 @@ public class PlayerHandler extends Gamer implements Runnable {
                                                 "|____________|");
                 pay(DRINK_COST);
                 messageToSelf("\n\nThis drink cost " +DRINK_COST+".\n");
-                messageToSelf(" Your current balance is: "+getMoney());
+                messageToSelf("Your current balance is: "+getMoney());
                 messageToAll("\nThe bar is open lads, but remember.... Don't drink too much , you'll end up seeing double. ");
-                messageToAll(getName()+" is feeling a bit tipsy...");
+                messageToAll(getName()+" is feeling a bit tipsy...\n");
                 break;
 
             case 2:
