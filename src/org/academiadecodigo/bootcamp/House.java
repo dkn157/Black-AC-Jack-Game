@@ -66,6 +66,8 @@ public class House {
                                    gameOver = true;
                                }
                            }
+
+                           playerList.get(0).messageToEveryoneEvenMe(podiumMessage());
                        }
                    }
                }
@@ -182,6 +184,24 @@ public class House {
 
         checkWhoWon();
         shuffleDeck();
+    }
+
+    public String podiumMessage() {
+
+        String thisWillBeReturned = new String();
+
+        LinkedList<Integer> finalScores = new LinkedList<>();
+
+        for (int i = 0; i < playerList.size(); i++) {
+
+            finalScores.add(playerList.get(i).getMoney());
+            //finalScores.listIterator()
+        }
+
+
+
+
+        return thisWillBeReturned;
     }
 
 
