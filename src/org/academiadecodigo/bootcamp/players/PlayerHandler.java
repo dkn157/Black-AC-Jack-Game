@@ -25,16 +25,23 @@ public class PlayerHandler extends Gamer implements Runnable {
     private boolean stillWantToBuy;
     private boolean readyToPlay;
 
+    // private Hand playerHand;
+    // private Status playerStatus;
+
 
     public PlayerHandler(Socket clientSocket, House house) {
+
         synchronized (house.getPlayerList()) {
+
             this.clientSocket = clientSocket;
-            roundIsRunning = true;
+            this.roundIsRunning = true;
             this.house = house;
-            playerHand = new LinkedList<>();
-            amountOfCardsHeld = 0;
+            this.playerHand = new LinkedList<>();
+            this.amountOfCardsHeld = 0;
+
             try {
                 prompt = new Prompt(clientSocket.getInputStream(), new PrintStream(clientSocket.getOutputStream()));
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -61,9 +68,12 @@ public class PlayerHandler extends Gamer implements Runnable {
         int answerChoice = prompt.getUserInput(scanner);
 
         switch (answerChoice) {
+
             case 1:
+
                 drawCard();
                 messageToAll(getName() + " has bought a card.\n");
+
                 if (getHandValue() > 21) {
                     stillWantToBuy = false;
                     messageToAll(getName() + " will not buy more cards.\n");
@@ -72,6 +82,7 @@ public class PlayerHandler extends Gamer implements Runnable {
 
                 }
                 break;
+
             case 2:
                 stillWantToBuy = false;
                 messageToAll(getName() + " will not buy more cards.\n");
