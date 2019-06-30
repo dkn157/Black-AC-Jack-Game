@@ -40,16 +40,16 @@ public class PlayerHandler extends Gamer implements Runnable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
-
+            readyToPlay = false;
+        //}
+    }
 
     @Override
     public void run() {
 
         synchronized (house) {
-            makeIntroduction();
 
-            //todo colocar menu entrar/sair
+            makeIntroduction();
             resetHand();
             //todo dar um jeito de só deixar entrar com round começando
         }
@@ -100,10 +100,10 @@ public class PlayerHandler extends Gamer implements Runnable {
         amountOfCardsHeld++;
         playerHand.add(house.givePlayerCard());
         increaseHandValue(playerHand.get(amountOfCardsHeld - 1).getRank().getValue());
-        System.out.println(getName()+ " card draw " + playerHand.get(amountOfCardsHeld - 1).getThisCard());
-        System.out.println(getName()+ "hand value: " + getHandValue());
-        messageToSelf(getName()+ " card draw " + playerHand.get(amountOfCardsHeld - 1).getThisCard()+"\n");
-        messageToSelf(getName()+ "hand value: " + getHandValue()+"\n");
+        System.out.println(getName() + " card draw " + playerHand.get(amountOfCardsHeld - 1).getThisCard());
+        System.out.println(getName() + "hand value: " + getHandValue());
+        messageToSelf(getName() + " card draw " + playerHand.get(amountOfCardsHeld - 1).getThisCard() + "\n");
+        messageToSelf(getName() + "hand value: " + getHandValue() + "\n");
     }
 
     public void makeIntroduction() {
@@ -116,19 +116,25 @@ public class PlayerHandler extends Gamer implements Runnable {
         ageQuestion.setMessage("\nHow old are you? Keep in mind no minors are allowed here.\n");
         setAge(prompt.getUserInput(ageQuestion));
 
-        String[] readyMenu = {"Let´s play!","Exit"};
+        String[] readyMenu = {"Let´s play!", "Exit"};
         MenuInputScanner scanner = new MenuInputScanner(readyMenu);
         scanner.setMessage("Do you want to play some BlackJack?????");
         int answerChoice = prompt.getUserInput(scanner);
 
-        switch (answerChoice) {
+        synchronized (house.getPlayerList()) {
 
-            case 1:
-                this.readyToPlay = true;
-                break;
-            case 2:
+            switch (answerChoice) {
 
-                break;
+                case 1:
+                    this.readyToPlay = true;
+                    break;
+                case 2:
+
+                    break;
+            }
+
+            //System.out.println(getName() + "is ready?" + readyToPlay);
+            notifyAll();
         }
 
         getStartingMoney();
@@ -164,32 +170,27 @@ public class PlayerHandler extends Gamer implements Runnable {
 
     public void playerRound() throws IOException {
 
-        synchronized (house) {
+        //feita a aposta, dinheiro na mesa
+        //jogador recebe 2 cartas, que são ao mesmo tempo tiradas do deck, tem seus valores adicionados à mão
+        amountOfCardsHeld = 0;
+        resetPlayerCards();
+        resetHand();
+
+        makeBet();
+        System.out.println(getName() + "current balance: " + getMoney());
+        messageToSelf(getName() + "current balance: " + getMoney() + "\n");
+        drawCard();
+        drawCard();
 
 
-            //feita a aposta, dinheiro na mesa
-            //jogador recebe 2 cartas, que são ao mesmo tempo tiradas do deck, tem seus valores adicionados à mão
-            amountOfCardsHeld = 0;
-            resetPlayerCards();
-            resetHand();
+        stillWantToBuy = true;
 
-            makeBet();
-            System.out.println(getName() + "current balance: " + getMoney());
-            messageToSelf(getName() + "current balance: " + getMoney() + "\n");
-            drawCard();
-            drawCard();
-
-
-            stillWantToBuy = true;
-
-            while (stillWantToBuy) {
-                try {
-                    playerMakeChoice();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+        while (stillWantToBuy) {
+            try {
+                playerMakeChoice();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-
         }
 
         //bloco de testes pra ver se a mecanica do draw esta ok
@@ -206,4 +207,5 @@ public class PlayerHandler extends Gamer implements Runnable {
         return readyToPlay;
     }
 }
+
 

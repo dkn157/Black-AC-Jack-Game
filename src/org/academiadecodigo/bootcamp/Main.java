@@ -9,7 +9,8 @@ public class Main {
     public static void main(String[] args) {
 
         Deck test = new Deck();
-        House house = new House();
+        House house = null;
+        house = new House();
         try {
             house.init();
         } catch (IOException e) {

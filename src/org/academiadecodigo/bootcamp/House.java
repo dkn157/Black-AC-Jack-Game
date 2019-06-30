@@ -18,6 +18,7 @@ public class House {
     private LinkedList<PlayerHandler> playerList;
     private Deck deck;
     private int tableMoney;
+    private ExecutorService fixedPool;
 
 
 
@@ -31,29 +32,20 @@ public class House {
 
     public void init() throws IOException {
 
-        ExecutorService fixedPool = Executors.newFixedThreadPool(1500);
+        fixedPool = Executors.newFixedThreadPool(1500);
         serverSocket = new ServerSocket(myPort);
 
         while (true) {
 
-            Socket clientSocket = serverSocket.accept();
+            listening();
 
-            PlayerHandler playerHandler = new PlayerHandler(clientSocket, this);
-            fixedPool.submit(playerHandler);
-            playerList.add(playerHandler);
 
             synchronized (this) {
                 synchronized (playerList) {
 
                     while (playerList.size() > 2) {
 
-                        for (int i = 0; i < playerList.size(); i++) {
-                            playerList.get(i).playerRound();
-                        }
-
-                        checkWhoWon();
-
-                        //botar menu p ver quem quer mais
+                        doARound();
 
                     }
                 }
@@ -81,7 +73,7 @@ public class House {
         return playerList;
     }
 
-    public void checkWhoWon() {
+    public void checkWhoWon() throws IOException {
 
         LinkedList<Integer> scores = new LinkedList<>();
 
@@ -114,7 +106,7 @@ public class House {
         for (int i = 0; i < winners.size(); i++) {
 
             winners.get(i).bet(-tableMoney);
-
+            winners.get(i).messageToSelf("You have won the round, and that gives you the right to receive "+tableMoney+"\n");
         }
 
     }
@@ -138,5 +130,34 @@ public class House {
 
         return theyAreReady;
 
+    }
+
+    public void listening() throws IOException {
+        Socket clientSocket = serverSocket.accept();
+
+        PlayerHandler playerHandler = new PlayerHandler(clientSocket, this);
+        playerHandler.messageToSelf(" __      __  ___ ___ .___.____     ___________    .___.__  .__                      \n" +
+                "/  \\    /  \\/   |   \\|   |    |    \\_   _____/  __| _/|  | |__| ____    ____  ______\n" +
+                "\\   \\/\\/   /    ~    \\   |    |     |    __)_  / __ | |  | |  |/    \\  / ___\\/  ___/\n" +
+                " \\        /\\    Y    /   |    |___  |        \\/ /_/ | |  |_|  |   |  \\/ /_/  >___ \\ \n" +
+                "  \\__/\\  /  \\___|_  /|___|_______ \\/_______  /\\____ | |____/__|___|  /\\___  /____  >\n" +
+                "       \\/         \\/             \\/        \\/      \\/              \\//_____/     \\/ \n" +
+                "__________.__                 __        ____.              __                       \n" +
+                "\\______   \\  | _____    ____ |  | __   |    |____    ____ |  | __                   \n" +
+                " |    |  _/  | \\__  \\ _/ ___\\|  |/ /   |    \\__  \\ _/ ___\\|  |/ /                   \n" +
+                " |    |   \\  |__/ __ \\\\  \\___|    </\\__|    |/ __ \\\\  \\___|    <                    \n" +
+                " |______  /____(____  /\\___  >__|_ \\________(____  /\\___  >__|_ \\                   \n" +
+                "        \\/          \\/     \\/     \\/             \\/     \\/     \\/                   \n");
+        fixedPool.submit(playerHandler);
+        playerList.add(playerHandler);
+    }
+
+    public void doARound() throws IOException {
+        for (int i = 0; i < playerList.size(); i++) {
+            playerList.get(i).playerRound();
+        }
+
+        checkWhoWon();
+        shuffleDeck();
     }
 }
