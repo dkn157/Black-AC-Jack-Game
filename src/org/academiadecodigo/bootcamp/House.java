@@ -13,7 +13,7 @@ import java.util.TreeSet;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class House {
+public class House implements Runnable {
 
     private ServerSocket serverSocket;
     private int myPort = 8080;
@@ -206,18 +206,21 @@ public class House {
         String thisWillBeReturned = new String();
 
         LinkedList<Integer> finalScores = new LinkedList<>();
-
+        int overallMaxMoney = -1;
         for (int i = 0; i < playerList.size(); i++) {
 
             //finalScores.add(playerList.get(i).getMoney());
             finalScores.add(playerList.get(i).getMoney());
+
+            if (playerList.get(i).getMoney() > overallMaxMoney) {
+                overallMaxMoney = playerList.get(i).getMoney();
+            }
         }
 
-        /*for (int i = 0; i < finalScores.size(); i++) {
-
-            //finalScores.add(playerList.get(i).getMoney());
-            thisWillBeReturned += finalScores.get(i).toString()+"\n";
-        }*/
+        int currentMaxMoney = -1;
+        for (int i = 0; i < finalScores.size(); i++) {
+            //if ()
+        }
 
 
         return "Work in progress for final message";
@@ -237,6 +240,8 @@ public class House {
 
             while (!gameOver) {
                 startRound();
+                checkWhoWon();
+                playerList.get(0).messageToEveryoneEvenMe(podiumMessage());
                 roundCounter++;
                 if ( roundCounter == 3) {
                     gameOver = true;
@@ -245,6 +250,11 @@ public class House {
 
 
         }
+
+    }
+
+    @Override
+    public void run() {
 
     }
 } // the end
