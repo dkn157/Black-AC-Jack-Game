@@ -26,7 +26,6 @@ public class House implements Runnable {
     private boolean readyToPlay;
 
 
-
     public House() {
 
         tableMoney = 0;
@@ -78,7 +77,7 @@ public class House implements Runnable {
         }*/
 
 
-  //  }
+    //  }
 
     public void init() throws IOException {
 
@@ -141,7 +140,7 @@ public class House implements Runnable {
         for (int i = 0; i < winners.size(); i++) {
 
             winners.get(i).pay(-tableMoney);
-            winners.get(i).messageToSelf("You have won the round!! total income is: "+tableMoney+"\n");
+            winners.get(i).messageToSelf("You have won the round!! total income is: " + tableMoney + "\n");
         }
     }
 
@@ -155,13 +154,13 @@ public class House implements Runnable {
 
         boolean theyAreReady;
         theyAreReady = true;
-        System.out.println("They are ready is "+theyAreReady);
-        for ( int i = 0; i < playerList.size(); i++) {
-            System.out.println("instancing theyareready as "+theyAreReady);
+        System.out.println("They are ready is " + theyAreReady);
+        for (int i = 0; i < playerList.size(); i++) {
+            System.out.println("instancing theyareready as " + theyAreReady);
             if (!playerList.get(i).isReadyToPlay()) {
-                System.out.println("atm theyareready is "+theyAreReady);
+                System.out.println("atm theyareready is " + theyAreReady);
                 theyAreReady = false;
-                System.out.println("and it was changed to "+theyAreReady);
+                System.out.println("and it was changed to " + theyAreReady);
             }
         }
 
@@ -228,7 +227,7 @@ public class House implements Runnable {
 
     public void letsBegin() throws IOException {
 
-        for (int i = 0; i < playerList.size();i++) {
+        for (int i = 0; i < playerList.size(); i++) {
             if (!playerList.get(i).isReadyToPlay()) {
                 readyToPlay = false;
                 return;
@@ -236,17 +235,17 @@ public class House implements Runnable {
             readyToPlay = true;
         }
 
-        if ( playerList.size() > 1 && readyToPlay == true) {
+        if (playerList.size() > 1 && readyToPlay == true) {
 
             while (!gameOver) {
                 startRound();
                 checkWhoWon();
-                playerList.get(0).messageToEveryoneEvenMe(podiumMessage());
                 roundCounter++;
-                if ( roundCounter == 3) {
+                if (roundCounter == 3) {
                     gameOver = true;
                 }
             }
+            playerList.get(0).messageToEveryoneEvenMe(podiumMessage());
 
 
         }
