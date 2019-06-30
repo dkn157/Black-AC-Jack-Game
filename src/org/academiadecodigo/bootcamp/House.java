@@ -8,8 +8,6 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.LinkedList;
-import java.util.Set;
-import java.util.TreeSet;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -34,7 +32,7 @@ public class House {
         deck = new Deck();
         gameOver = false;
         roundCounter = 0;
-        rounds = 1;
+        rounds = 15;
 
     }
 
@@ -274,14 +272,14 @@ public class House {
                 e.printStackTrace();
             }
 
-            restardMethod();
+            restartMethod();
 
 
         }
 
     }
 
-    private void restardMethod() throws IOException {
+    private void restartMethod() throws IOException {
         gameOver = false;
         for (int i = 0; i < playerList.size(); i++) {
             playerList.get(i).setMoney(0);

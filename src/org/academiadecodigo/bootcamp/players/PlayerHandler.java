@@ -24,11 +24,12 @@ public class PlayerHandler extends Gamer implements Runnable {
     private int amountOfCardsHeld;
     private boolean stillWantToBuy;
     private boolean readyToPlay;
-    private final int GIRL_COST = 3;
-    private final int ROOM_COST = 3;
-    private final int DRINK_COST = 1;
-    private final int WATER_COST = 2;
-    private final int SHEMALE_MONEY = 6;
+    private final int GIRL_COST = 30;
+    private final int ROOM_COST = 30;
+    private final int DRINK_COST = 10;
+    private final int WATER_COST = 5;
+    private final int SHEMALE_MONEY = 60;
+    private final int BONUS_MONEY = 5;
 
 
     public PlayerHandler(Socket clientSocket, House house) {
@@ -171,7 +172,7 @@ public class PlayerHandler extends Gamer implements Runnable {
 
     public void makeBet() {
 
-        int currentBet = 1;
+        int currentBet = 10;
         pay(currentBet);
         house.setTableMoney(currentBet);
     }
@@ -243,11 +244,11 @@ public class PlayerHandler extends Gamer implements Runnable {
         int random = (int) (Math.random()*100);
         System.out.println("Random number: " + random);
 
-        if (getMoney()<4 && random<50 || getMoney()==0) {
+        if (getMoney()<40 && random<10 || getMoney()==0) {
             earnMoney();
         }
 
-        if(getMoney()>9 && random<20) {
+        if(getMoney()>80 && random<10) {
             girlAppears();
         }
 
@@ -257,10 +258,24 @@ public class PlayerHandler extends Gamer implements Runnable {
     }
 
 
+    public void setReadyToPlay(boolean isItReady) {
+        this.readyToPlay = isItReady;
+    }
+
     public boolean isReadyToPlay() {
         return readyToPlay;
     }
 
+
+    /**
+     *
+     * ASCII
+     * ART
+     * METHODS
+     *      *
+     *
+     * @throws IOException
+     */
 
     // Hooker method. Should be prompt to player if money is high
     public void girlAppears() throws IOException {
@@ -385,9 +400,23 @@ public class PlayerHandler extends Gamer implements Runnable {
                         "               o                    o                 o\n" +
                         "                o                    o                 o\n" +
                         "                o                    o                 o\n");
-                messageToAll("\n" +getName() + " leaves the table, heading into a dark room with some suspicious shemales \n");
+                messageToAll("\n" +getName() + " leaves the table, heading into a dark room with some " +
+                        "suspicious shemales \n");
 
-                // TODO: 30/06/2019 case2:
+            case 2:
+                messageToSelf("\nCongrats, even though you are desperate for money" +
+                        "you didn't lose your dignity, at least for now\n");
+                messageToAll("\nBig applause to "+getName()+" cause he resisted a tempting " +
+                        "proposal (for some)\n");
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                setMoney(getMoney() + BONUS_MONEY);
+                messageToSelf("\nTo compensate your sad decision, you've just received "+BONUS_MONEY+"\n");
+                messageToSelf("\nCurrent balance is: "+getMoney());
+
         }
     }
 
@@ -409,42 +438,68 @@ public class PlayerHandler extends Gamer implements Runnable {
                     e.printStackTrace();
                 }
                 messageToSelf("\n\n\n     |    |\n" +
-                                            "        |    |\n" +
-                                                "    |____|\n" +
-                                                "    |    |\n" +
-                                                "    (    )\n" +
-                                                "    )    (\n" +
-                                                "  .'      `.\n" +
-                                                " /          \\\n" +
-                                                "|------------|\n" +
-                                                "|JACK DANIELS|\n" +
-                                                "|    ----    |\n" +
-                                                "|   (No.7)   |\n" +
-                                                "|    ----    |\n" +
-                                                "| Tennessee  |\n" +
-                                                "|  WHISKEY   |\n" +
-                                                "|  40% Vol.  |\n" +
-                                                "|------------|\n" +
-                                                "|____________|");
+                        "        |    |\n" +
+                        "    |____|\n" +
+                        "    |    |\n" +
+                        "    (    )\n" +
+                        "    )    (\n" +
+                        "  .'      `.\n" +
+                        " /          \\\n" +
+                        "|------------|\n" +
+                        "|JACK DANIELS|\n" +
+                        "|    ----    |\n" +
+                        "|   (No.7)   |\n" +
+                        "|    ----    |\n" +
+                        "| Tennessee  |\n" +
+                        "|  WHISKEY   |\n" +
+                        "|  40% Vol.  |\n" +
+                        "|------------|\n" +
+                        "|____________|");
                 pay(DRINK_COST);
-                messageToSelf("\n\nThis drink cost " +DRINK_COST+".\n");
-                messageToSelf("Your current balance is: "+getMoney());
+                messageToSelf("\n\nThis drink cost " + DRINK_COST + ".\n");
+                messageToSelf("Your current balance is: " + getMoney());
                 messageToAll("\nThe bar is open lads, but remember.... Don't drink too much , you'll end up seeing double. ");
-                messageToAll(getName()+" is feeling a bit tipsy...\n");
+                messageToAll(getName() + " is feeling a bit tipsy...\n");
                 break;
 
             case 2:
-                messageToAll("\n" + getName()+ " just asked for a glass of tap water. AHAHAHHA\n");
+                messageToAll("\n" + getName() + " just asked for a glass of tap water. AHAHAHHA\n");
                 messageToSelf("\nYou should be ashamed of yourself...tap Water? Everyone will know how cheapskate you are\n");
                 try {
                     Thread.sleep(2000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                messageToSelf("\nFor being ridiculous, you will have to pay for this. Total cost: " + WATER_COST+". ");
-                pay(DRINK_COST);
-                messageToSelf("Current balance:  "+ getMoney() + "\n");
+                messageToSelf("\nFor being ridiculous, you will have to pay for this. Total cost: " + WATER_COST + ". ");
+                pay(WATER_COST);
+                messageToSelf("Current balance:  " + getMoney() + "\n");
+        }
+    }
 
+        //If you get out of money
+        public void bouncerApproach() throws IOException, InterruptedException {
+
+            String[] options = {"Become a cleaner", "Visit Shemale friend"};
+
+            MenuInputScanner scanner = new MenuInputScanner(options);
+            scanner.setMessage("\nDegenerate gambler, you have no money left to pay your debts, " +
+                    "what are you you going to do?\n");
+
+
+            int answerChoice = prompt.getUserInput(scanner);
+
+            switch (answerChoice) {
+                case 1:
+                    earnMoney();
+                    Thread.sleep(1000);
+                    messageToSelf("\nThat's what happens to losers");
+
+                case 2:
+                    earnMoney();
+                    Thread.sleep(1000);
+                    messageToSelf("\nWe knew you would like more of that! Hope you can sit down during " +
+                            "you next rounds\n");
+                    messageToAll(getName()+" loved the dark room so much he was asking for more");
 
 
         }
@@ -452,8 +507,6 @@ public class PlayerHandler extends Gamer implements Runnable {
 
     }
 
-    public void setReadyToPlay(boolean isItReady) {
-        this.readyToPlay = isItReady;
-    }
+
 
 } // the end

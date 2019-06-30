@@ -1,8 +1,5 @@
 package org.academiadecodigo.bootcamp.players;
 
-import org.academiadecodigo.bootcamp.deck.Card;
-
-import java.util.LinkedList;
 
 public abstract class Gamer {
 
@@ -13,7 +10,7 @@ public abstract class Gamer {
 
 
     public void getStartingMoney() {
-        money = 10;
+        money = 100;
     }
 
     public void increaseHandValue(int cardValue){
