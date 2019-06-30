@@ -29,7 +29,7 @@ public class PlayerHandler extends Gamer implements Runnable {
 
 
     public PlayerHandler(Socket clientSocket, House house) {
-        synchronized (house.getPlayerList()) {
+        //synchronized (house.getPlayerList()) {
             this.clientSocket = clientSocket;
             roundIsRunning = true;
             this.house = house;
@@ -41,7 +41,7 @@ public class PlayerHandler extends Gamer implements Runnable {
                 e.printStackTrace();
             }
         }
-    }
+
 
     @Override
     public void run() {
@@ -124,7 +124,7 @@ public class PlayerHandler extends Gamer implements Runnable {
         switch (answerChoice) {
 
             case 1:
-                readyToPlay = true;
+                this.readyToPlay = true;
                 break;
             case 2:
 
@@ -164,27 +164,32 @@ public class PlayerHandler extends Gamer implements Runnable {
 
     public void playerRound() throws IOException {
 
-        //feita a aposta, dinheiro na mesa
-        //jogador recebe 2 cartas, que são ao mesmo tempo tiradas do deck, tem seus valores adicionados à mão
-        amountOfCardsHeld = 0;
-        resetPlayerCards();
-        resetHand();
-
-        makeBet();
-        System.out.println(getName()+"current balance: " + getMoney());
-        messageToSelf(getName()+"current balance: " + getMoney()+"\n");
-        drawCard();
-        drawCard();
+        synchronized (house) {
 
 
-        stillWantToBuy = true;
+            //feita a aposta, dinheiro na mesa
+            //jogador recebe 2 cartas, que são ao mesmo tempo tiradas do deck, tem seus valores adicionados à mão
+            amountOfCardsHeld = 0;
+            resetPlayerCards();
+            resetHand();
 
-        while (stillWantToBuy) {
-            try {
-                playerMakeChoice();
-            } catch (IOException e) {
-                e.printStackTrace();
+            makeBet();
+            System.out.println(getName() + "current balance: " + getMoney());
+            messageToSelf(getName() + "current balance: " + getMoney() + "\n");
+            drawCard();
+            drawCard();
+
+
+            stillWantToBuy = true;
+
+            while (stillWantToBuy) {
+                try {
+                    playerMakeChoice();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
+
         }
 
         //bloco de testes pra ver se a mecanica do draw esta ok
