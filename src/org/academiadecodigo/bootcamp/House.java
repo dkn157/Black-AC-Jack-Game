@@ -137,7 +137,7 @@ public class House {
 
     }
 
-    public void startRound() throws IOException {
+    public void startRound() throws IOException, InterruptedException {
         for (int i = 0; i < playerList.size(); i++) {
             playerList.get(i).playerRound();
         }
