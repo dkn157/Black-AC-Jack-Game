@@ -485,7 +485,7 @@ public class PlayerHandler extends Gamer implements Runnable {
                 Thread.sleep(1000);
                 messageToSelf("\nIt's free huncka huncka time\n");
                 Thread.sleep(1000);
-                messageToSelf(Ascii.getGirl());
+                messageToSelf(Ascii.getHooker());
                 messageToAll(getName()+" went for a quickie in the bathroom");
                 break;
 
