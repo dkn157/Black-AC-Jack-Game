@@ -26,7 +26,6 @@ public class House implements Runnable {
     private boolean readyToPlay;
 
 
-
     public House() {
 
         tableMoney = 0;
@@ -36,49 +35,6 @@ public class House implements Runnable {
         roundCounter = 0;
 
     }
-
-    /*public void init() throws IOException {
-
-        fixedPool = Executors.newFixedThreadPool(1500);
-        serverSocket = new ServerSocket(myPort);
-
-        while (true) {
-
-         //  if (playerList.size()>=2) {
-               joinGame();
-
-               while (arePlayersReady()) {
-
-                   try {
-                       wait();
-                   } catch (InterruptedException e) {
-                       e.printStackTrace();
-                   }
-
-               }
-
-               synchronized (this) {
-                   synchronized (playerList) {
-
-                       if (playerList.size() > 2) {
-
-                           while (!gameOver) {
-                               startRound();
-                               roundCounter++;
-                               if (roundCounter == 3) {
-                                   gameOver = true;
-                               }
-                           }
-
-                           playerList.get(0).messageToEveryoneEvenMe(podiumMessage());
-                       }
-                   }
-               }
-           }
-        }*/
-
-
-  //  }
 
     public void init() throws IOException {
 
@@ -141,7 +97,7 @@ public class House implements Runnable {
         for (int i = 0; i < winners.size(); i++) {
 
             winners.get(i).pay(-tableMoney);
-            winners.get(i).messageToSelf("You have won the round!! total income is: "+tableMoney+"\n");
+            winners.get(i).messageToSelf("You have won the round!! total income is: " + tableMoney + "\n");
         }
     }
 
@@ -155,13 +111,13 @@ public class House implements Runnable {
 
         boolean theyAreReady;
         theyAreReady = true;
-        System.out.println("They are ready is "+theyAreReady);
-        for ( int i = 0; i < playerList.size(); i++) {
-            System.out.println("instancing theyareready as "+theyAreReady);
+        System.out.println("They are ready is " + theyAreReady);
+        for (int i = 0; i < playerList.size(); i++) {
+            System.out.println("instancing theyareready as " + theyAreReady);
             if (!playerList.get(i).isReadyToPlay()) {
-                System.out.println("atm theyareready is "+theyAreReady);
+                System.out.println("atm theyareready is " + theyAreReady);
                 theyAreReady = false;
-                System.out.println("and it was changed to "+theyAreReady);
+                System.out.println("and it was changed to " + theyAreReady);
             }
         }
 
@@ -196,8 +152,6 @@ public class House implements Runnable {
         for (int i = 0; i < playerList.size(); i++) {
             playerList.get(i).playerRound();
         }
-
-        checkWhoWon();
         shuffleDeck();
     }
 
@@ -209,7 +163,6 @@ public class House implements Runnable {
         int overallMaxMoney = -1;
         for (int i = 0; i < playerList.size(); i++) {
 
-            //finalScores.add(playerList.get(i).getMoney());
             finalScores.add(playerList.get(i).getMoney());
 
             if (playerList.get(i).getMoney() > overallMaxMoney) {
@@ -217,18 +170,18 @@ public class House implements Runnable {
             }
         }
 
-        int currentMaxMoney = -1;
-        for (int i = 0; i < finalScores.size(); i++) {
-            //if ()
+        for ( int i = 0; i < playerList.size();i++) {
+            if ( playerList.get(i).getMoney() == overallMaxMoney) {
+                thisWillBeReturned += playerList.get(i).getName()+" finished the game with the highest amount of money equivalent to "+playerList.get(i).getMoney()+"\n";
+            }
         }
 
-
-        return "Work in progress for final message";
+        return thisWillBeReturned;
     }
 
     public void letsBegin() throws IOException {
 
-        for (int i = 0; i < playerList.size();i++) {
+        for (int i = 0; i < playerList.size(); i++) {
             if (!playerList.get(i).isReadyToPlay()) {
                 readyToPlay = false;
                 return;
@@ -236,21 +189,29 @@ public class House implements Runnable {
             readyToPlay = true;
         }
 
-        if ( playerList.size() > 1 && readyToPlay == true) {
+        if (playerList.size() > 1 && readyToPlay == true) {
 
             while (!gameOver) {
                 startRound();
                 checkWhoWon();
-                playerList.get(0).messageToEveryoneEvenMe(podiumMessage());
                 roundCounter++;
-                if ( roundCounter == 3) {
+                if (roundCounter == 10) {
                     gameOver = true;
                 }
             }
+            endingMessages();
 
 
         }
 
+    }
+
+    public void endingMessages() throws IOException {
+        playerList.get(0).messageToEveryoneEvenMe(podiumMessage());
+
+        for ( int i = 0; i < playerList.size(); i++) {
+            playerList.get(i).messageToSelf("You finished the game with an amount of money equal to "+playerList.get(i).getMoney()+".\n");
+        }
     }
 
     @Override

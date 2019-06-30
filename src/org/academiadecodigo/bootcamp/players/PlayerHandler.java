@@ -33,6 +33,7 @@ public class PlayerHandler extends Gamer implements Runnable {
 
     public PlayerHandler(Socket clientSocket, House house) {
         synchronized (house.getPlayerList()) {
+            getStartingMoney();
             this.clientSocket = clientSocket;
             roundIsRunning = true;
             this.house = house;
