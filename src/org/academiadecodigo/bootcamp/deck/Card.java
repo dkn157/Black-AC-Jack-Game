@@ -3,12 +3,14 @@ package org.academiadecodigo.bootcamp.deck;
 public class Card {
 
     private String thisCard;
+    private Suits suit;
     private Ranks rank;
 
     public Card(Suits whichSuit, Ranks whichRank){
 
         thisCard = whichRank.toString()+" of "+whichSuit.toString();
         //System.out.println(rank);
+        suit = whichSuit;
         rank = whichRank;
     }
 
@@ -18,6 +20,11 @@ public class Card {
 
     public String getThisCard() {
         return thisCard;
+    }
+
+    public String getCardArt() {
+
+        return suit.getSuitArt();
     }
 }
 

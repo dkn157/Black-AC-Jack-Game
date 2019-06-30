@@ -41,7 +41,7 @@ public class Hand {
 //    }
 //
 //    /**
-//     * @return a {@link Queue} containing the cards in this {@code Hand}
+//     * return a containing the cards in this
 //     */
 //    public List<Card> getCards() {
 //        return new ArrayList<>(cards); // defensive copy and conversion to list
