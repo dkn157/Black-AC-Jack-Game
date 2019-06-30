@@ -19,6 +19,8 @@ public class House {
     private Deck deck;
     private int tableMoney;
     private ExecutorService fixedPool;
+    private boolean gameOver;
+    private int roundCounter;
 
 
 
@@ -27,6 +29,8 @@ public class House {
         tableMoney = 0;
         playerList = new LinkedList<>();
         deck = new Deck();
+        gameOver = false;
+        roundCounter = 0;
 
     }
 
@@ -48,8 +52,13 @@ public class House {
 
                        if (playerList.size() >= 2) {
 
-                           startRound();
-
+                           while (!gameOver) {
+                               startRound();
+                               roundCounter++;
+                               if (roundCounter == 3) {
+                                   gameOver = true;
+                               }
+                           }
                        }
                    }
                }
@@ -62,9 +71,6 @@ public class House {
         deck.shuffleDeck();
     }
 
-    public int getTableMoney() {
-        return tableMoney;
-    }
 
     public void setTableMoney(int betMoney) {
         this.tableMoney += betMoney;
@@ -137,6 +143,7 @@ public class House {
     }
 
     public void joinGame() throws IOException {
+
         Socket clientSocket = serverSocket.accept();
         PlayerHandler playerHandler = new PlayerHandler(clientSocket, this);
         playerHandler.messageToSelf(" __      __  ___ ___ .___.____     ___________    .___.__  .__                      \n" +
