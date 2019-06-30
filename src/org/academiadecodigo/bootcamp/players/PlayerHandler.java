@@ -46,6 +46,11 @@ public class PlayerHandler extends Gamer implements Runnable {
 
         synchronized (house) {
 
+            try {
+                idQuestion();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             //todo colocar menu entrar/sair
             resetHand();
             //todo dar um jeito de só deixar entrar com round começando
@@ -102,7 +107,7 @@ public class PlayerHandler extends Gamer implements Runnable {
         messageToSelf(getName() + "hand value: " + getHandValue() + "\n");
     }
 
-    public synchronized void idQuestion() {
+    public synchronized void idQuestion() throws IOException {
 
         StringInputScanner nameQuestion = new StringInputScanner();
         nameQuestion.setMessage("What is your name?\n");
@@ -111,9 +116,11 @@ public class PlayerHandler extends Gamer implements Runnable {
         IntegerInputScanner ageQuestion = new IntegerRangeInputScanner(18, 100);
         ageQuestion.setMessage("\nHow old are you? Keep in mind no minors are allowed here.\n");
         setAge(prompt.getUserInput(ageQuestion));
+
+        readyMenu();
     }
 
-    public void readyMenu() {
+    public void readyMenu() throws IOException {
         String[] readyMenu = {"Let´s play!", "Exit"};
         MenuInputScanner scanner = new MenuInputScanner(readyMenu);
         scanner.setMessage("Do you want to play some BlackJack?????");
@@ -123,6 +130,7 @@ public class PlayerHandler extends Gamer implements Runnable {
 
             case 1:
                 readyToPlay = true;
+                house.letsBegin();
                 break;
             case 2:
 
