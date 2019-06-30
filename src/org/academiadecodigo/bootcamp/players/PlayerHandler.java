@@ -303,7 +303,7 @@ public class PlayerHandler extends Gamer implements Runnable {
 
         MenuInputScanner scanner = new MenuInputScanner(options);
         scanner.setMessage("\nSince you are low on coins, a group of big boys approaches you with a proposition." +
-                " Do you want to join them in the dark room?" +
+                " Do you want to join them in the dark room?");
 
 
         int answerChoice = prompt.getUserInput(scanner);
