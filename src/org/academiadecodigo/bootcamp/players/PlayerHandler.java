@@ -24,6 +24,11 @@ public class PlayerHandler extends Gamer implements Runnable {
     private int amountOfCardsHeld;
     private boolean stillWantToBuy;
     public boolean readyToPlay;
+    private final int GIRL_COST = 3;
+    private final int ROOM_COST = 3;
+    private final int DRINK_COST = 1;
+    private final int WATER_COST = 2;
+    private final int SHEMALE_MONEY = 6;
 
 
     public PlayerHandler(Socket clientSocket, House house) {
@@ -215,11 +220,11 @@ public class PlayerHandler extends Gamer implements Runnable {
         int random = (int) (Math.random()*100);
         System.out.println("Random number: " + random);
 
-        if (getMoney()<4 && random<50) {
+        if (getMoney()<4 && random<30) {
             earnMoney();
         }
 
-        if(getMoney()>8 && random<50) {
+        if(getMoney()>9 && random<30) {
             girlAppears();
         }
     }
@@ -236,9 +241,9 @@ public class PlayerHandler extends Gamer implements Runnable {
         String[] options = {"Go with her", "Hell no! I'm gambling"};
 
         MenuInputScanner scanner = new MenuInputScanner(options);
-        scanner.setMessage("A girl appears next to you, inviting you to check-in into a room" +
-                "       .-'\"\"\"''---.___\n" +
-                "           .'               \"'-.___\n" +
+        scanner.setMessage("A girl appears next to you, inviting you to check-in into a room\n" +
+                "\n\n\n       .-'\"\"\"''---.___\n" +
+                "          .'               \"'-.___\n" +
                 "         _'              _'-\"'\"\"\"  \"\"\"-\n" +
                 "        /    7        .'\"              \"->\n" +
                 "       .    .|     _-'                   '.\n" +
@@ -279,13 +284,11 @@ public class PlayerHandler extends Gamer implements Runnable {
                 messageToSelf("With animal instinct, you left the table with that sweet pie. " +
                         "However, she makes you pay for huncka huncka, plus the room");
                 messageToAll(getName() + " left the table with a fine real woman and a bump in his pants");
-                readyToPlay = false;
-                int roomCost = 3;
-                int girlCost = 3;
-                pay(roomCost + girlCost);
-                messageToSelf("\nYou had some bills to pay: " + "Room: " + roomCost + " / Girl: " + girlCost);
+                int bill = ROOM_COST+GIRL_COST;
+                pay(bill);
+                messageToSelf("\nYou had some bills to pay: "+ "Total: " + bill + " (Room: " + ROOM_COST + " / Girl: " + GIRL_COST+")");
                 messageToSelf("\nYour current balance is: " + getMoney());
-
+                break;
 
             case 2:
                 messageToSelf("\nNo thanks bitch! I'm here to make money!\n");
@@ -310,10 +313,12 @@ public class PlayerHandler extends Gamer implements Runnable {
 
         switch (answerChoice) {
             case 1:
-                int earnedCoins = 6;
-                this.setMoney(earnedCoins);
+
+                this.setMoney(getMoney() + SHEMALE_MONEY);
                 messageToSelf("You chose, literally, the hard way... Brave soldier");
-                messageToSelf(" \n              ..ooo*\"\"\"**ooooo .oo*\"\"*ooo..\n" +
+                messageToSelf("\n Your dignity earned you a total of: "+SHEMALE_MONEY);
+                messageToSelf("\nYour current balance is: "+getMoney());
+                messageToSelf("\n\n\n..ooo*\"\"\"**ooooo .oo*\"\"*ooo..\n" +
                         "             .  oo*\"           \"*o.oo*\"           \"*o.\n" +
                         "            . o\"                   'o\"                  \"o\n" +
                         "             o                      o                     *o\n" +
@@ -341,6 +346,47 @@ public class PlayerHandler extends Gamer implements Runnable {
                 messageToAll(getName() + " leaves the table, heading into a dark room with some suspicious shemales");
 
         }
+    }
+
+    public void offerDrink() throws IOException {
+
+        String[] options = {"Whiskey - Fill it up", "A glass of tap water"};
+
+        MenuInputScanner scanner = new MenuInputScanner(options);
+        scanner.setMessage("\nWould you like something to drink?");
+        int answerChoice = prompt.getUserInput(scanner);
+
+        switch (answerChoice) {
+            case 1:
+                messageToSelf("\nRight away you drunk fool");
+                messageToSelf("\n\n\n     |    |\n" +
+                                            "        |    |\n" +
+                                                "    |____|\n" +
+                                                "    |    |\n" +
+                                                "    (    )\n" +
+                                                "    )    (\n" +
+                                                "  .'      `.\n" +
+                                                " /          \\\n" +
+                                                "|------------|\n" +
+                                                "|JACK DANIELS|\n" +
+                                                "|    ----    |\n" +
+                                                "|   (No.7)   |\n" +
+                                                "|    ----    |\n" +
+                                                "| Tennessee  |\n" +
+                                                "|  WHISKEY   |\n" +
+                                                "|  40% Vol.  |\n" +
+                                                "|------------|\n" +
+                                                "|____________|dp");
+                pay(DRINK_COST);
+                messageToSelf("\nThis drink cost " +DRINK_COST+".");
+                messageToSelf("Your current balance is: "+getMoney());
+                messageToAll("The bar is open lads, but remember.... Don't drink to forget , you'll end up seeing double.");
+                break;
+
+
+        }
+
+
     }
 
 
