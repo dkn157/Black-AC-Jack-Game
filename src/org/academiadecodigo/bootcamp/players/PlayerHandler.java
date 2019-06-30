@@ -260,7 +260,7 @@ public class PlayerHandler extends Gamer implements Runnable {
 
             case 2:
                 messageToSelf("No thanks bitch! I'm here to make money!");
-                messageToSelf("Girl: You will regret this, I'm could make all your dreams come true");
+                messageToSelf("Girl: You will regret this, I could make all your dreams come true");
                 messageToAll("Bitches are crawling around the table... Hold your pants boys! "
                         + getName() + " can be a disguised pussy!");
                 break;
