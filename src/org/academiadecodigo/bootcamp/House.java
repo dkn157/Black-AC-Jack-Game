@@ -8,10 +8,12 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.LinkedList;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class House {
+public class House implements Runnable {
 
     private ServerSocket serverSocket;
     private int myPort = 8080;
@@ -21,6 +23,7 @@ public class House {
     private ExecutorService fixedPool;
     private boolean gameOver;
     private int roundCounter;
+    private boolean readyToPlay;
 
 
 
@@ -34,7 +37,7 @@ public class House {
 
     }
 
-    public void init() throws IOException {
+    /*public void init() throws IOException {
 
         fixedPool = Executors.newFixedThreadPool(1500);
         serverSocket = new ServerSocket(myPort);
@@ -57,7 +60,7 @@ public class House {
                synchronized (this) {
                    synchronized (playerList) {
 
-                       if (playerList.size() > 2 /*&& arePlayersReady()*/) {
+                       if (playerList.size() > 2) {
 
                            while (!gameOver) {
                                startRound();
@@ -72,9 +75,21 @@ public class House {
                    }
                }
            }
-        }
+        }*/
+
 
   //  }
+
+    public void init() throws IOException {
+
+        fixedPool = Executors.newFixedThreadPool(1500);
+        serverSocket = new ServerSocket(myPort);
+
+        while (serverSocket.isBound()) {
+            joinGame(); //verificar se mudou
+        }
+
+    }
 
     public void shuffleDeck() {
         deck.shuffleDeck();
@@ -158,6 +173,7 @@ public class House {
 
         Socket clientSocket = serverSocket.accept();
         PlayerHandler playerHandler = new PlayerHandler(clientSocket, this);
+        playerList.add(playerHandler);
         playerHandler.messageToSelf(" __      __  ___ ___ .___.____     ___________    .___.__  .__                      \n" +
                 "/  \\    /  \\/   |   \\|   |    |    \\_   _____/  __| _/|  | |__| ____    ____  ______\n" +
                 "\\   \\/\\/   /    ~    \\   |    |     |    __)_  / __ | |  | |  |/    \\  / ___\\/  ___/\n" +
@@ -171,9 +187,8 @@ public class House {
                 " |______  /____(____  /\\___  >__|_ \\________(____  /\\___  >__|_ \\                   \n" +
                 "        \\/          \\/     \\/     \\/             \\/     \\/     \\/                   \n");
         fixedPool.submit(playerHandler);
-        playerHandler.idQuestion();
+        //playerHandler.idQuestion();
 
-        playerList.add(playerHandler);
 
     }
 
@@ -191,25 +206,58 @@ public class House {
         String thisWillBeReturned = new String();
 
         LinkedList<Integer> finalScores = new LinkedList<>();
-
+        int overallMaxMoney = -1;
         for (int i = 0; i < playerList.size(); i++) {
 
+            //finalScores.add(playerList.get(i).getMoney());
             finalScores.add(playerList.get(i).getMoney());
-            //finalScores.listIterator()
+
+            if (playerList.get(i).getMoney() > overallMaxMoney) {
+                overallMaxMoney = playerList.get(i).getMoney();
+            }
+        }
+
+        int currentMaxMoney = -1;
+        for (int i = 0; i < finalScores.size(); i++) {
+            //if ()
         }
 
 
-
-
-        return thisWillBeReturned;
+        return "Work in progress for final message";
     }
 
+    public void letsBegin() throws IOException {
+
+        for (int i = 0; i < playerList.size();i++) {
+            if (!playerList.get(i).isReadyToPlay()) {
+                readyToPlay = false;
+                return;
+            }
+            readyToPlay = true;
+        }
+
+        if ( playerList.size() > 1 && readyToPlay == true) {
+
+            while (!gameOver) {
+                startRound();
+                checkWhoWon();
+                playerList.get(0).messageToEveryoneEvenMe(podiumMessage());
+                roundCounter++;
+                if ( roundCounter == 3) {
+                    gameOver = true;
+                }
+            }
 
 
+        }
 
+    }
 
+    @Override
+    public void run() {
 
-    } // the end
+    }
+} // the end
 
 
 
