@@ -13,7 +13,7 @@ import java.util.TreeSet;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class House implements Runnable {
+public class House {
 
     private ServerSocket serverSocket;
     private int myPort = 8080;
@@ -288,10 +288,10 @@ public class House implements Runnable {
         }
     }
 
-    @Override
-    public void run() {
-
+    public void removePlayer(PlayerHandler playerHandler){
+        playerList.remove(playerHandler);
     }
+
 } // the end
 
 

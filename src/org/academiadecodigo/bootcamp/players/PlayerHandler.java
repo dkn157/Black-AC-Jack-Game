@@ -134,11 +134,16 @@ public class PlayerHandler extends Gamer implements Runnable {
                 house.letsBegin();
                 break;
             case 2:
-
+                playerExit();
                 break;
         }
 
         getStartingMoney();
+    }
+
+    private void playerExit() throws IOException {
+        house.removePlayer(this);
+        clientSocket.close();
     }
 
     public void makeBet() {
