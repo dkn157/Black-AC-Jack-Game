@@ -43,15 +43,16 @@ public class House {
             synchronized (this) {
                 synchronized (playerList) {
 
-                    while (playerList.size() > 2) {
+                    if (playerList.size() >= 2) {
 
                         doARound();
 
                     }
                 }
+                }
             }
         }
-    }
+  //  }
 
     public void shuffleDeck() {
         deck.shuffleDeck();
@@ -150,6 +151,7 @@ public class House {
                 "        \\/          \\/     \\/     \\/             \\/     \\/     \\/                   \n");
         fixedPool.submit(playerHandler);
         playerList.add(playerHandler);
+        
     }
 
     public void doARound() throws IOException {

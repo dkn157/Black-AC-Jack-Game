@@ -29,7 +29,7 @@ public class PlayerHandler extends Gamer implements Runnable {
 
 
     public PlayerHandler(Socket clientSocket, House house) {
-        //synchronized (house.getPlayerList()) {
+        synchronized (house.getPlayerList()) {
             this.clientSocket = clientSocket;
             roundIsRunning = true;
             this.house = house;
@@ -40,16 +40,16 @@ public class PlayerHandler extends Gamer implements Runnable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            readyToPlay = false;
-        //}
+        }
     }
 
     @Override
     public void run() {
 
         synchronized (house) {
-
             makeIntroduction();
+
+            //todo colocar menu entrar/sair
             resetHand();
             //todo dar um jeito de só deixar entrar com round começando
         }
@@ -100,13 +100,13 @@ public class PlayerHandler extends Gamer implements Runnable {
         amountOfCardsHeld++;
         playerHand.add(house.givePlayerCard());
         increaseHandValue(playerHand.get(amountOfCardsHeld - 1).getRank().getValue());
-        System.out.println(getName() + " card draw " + playerHand.get(amountOfCardsHeld - 1).getThisCard());
-        System.out.println(getName() + "hand value: " + getHandValue());
-        messageToSelf(getName() + " card draw " + playerHand.get(amountOfCardsHeld - 1).getThisCard() + "\n");
-        messageToSelf(getName() + "hand value: " + getHandValue() + "\n");
+        System.out.println(getName()+ " card draw " + playerHand.get(amountOfCardsHeld - 1).getThisCard());
+        System.out.println(getName()+ "hand value: " + getHandValue());
+        messageToSelf(getName()+ " card draw " + playerHand.get(amountOfCardsHeld - 1).getThisCard()+"\n");
+        messageToSelf(getName()+ "hand value: " + getHandValue()+"\n");
     }
 
-    public void makeIntroduction() {
+   public synchronized void makeIntroduction() {
 
         StringInputScanner nameQuestion = new StringInputScanner();
         nameQuestion.setMessage("What is your name?\n");
@@ -115,26 +115,22 @@ public class PlayerHandler extends Gamer implements Runnable {
         IntegerInputScanner ageQuestion = new IntegerRangeInputScanner(18, 100);
         ageQuestion.setMessage("\nHow old are you? Keep in mind no minors are allowed here.\n");
         setAge(prompt.getUserInput(ageQuestion));
+    }
 
-        String[] readyMenu = {"Let´s play!", "Exit"};
+    public void readyMenu() {
+        String[] readyMenu = {"Let´s play!","Exit"};
         MenuInputScanner scanner = new MenuInputScanner(readyMenu);
         scanner.setMessage("Do you want to play some BlackJack?????");
         int answerChoice = prompt.getUserInput(scanner);
 
-        synchronized (house.getPlayerList()) {
+        switch (answerChoice) {
 
-            switch (answerChoice) {
+            case 1:
+                readyToPlay = true;
+                break;
+            case 2:
 
-                case 1:
-                    this.readyToPlay = true;
-                    break;
-                case 2:
-
-                    break;
-            }
-
-            //System.out.println(getName() + "is ready?" + readyToPlay);
-            notifyAll();
+                break;
         }
 
         getStartingMoney();
@@ -177,8 +173,8 @@ public class PlayerHandler extends Gamer implements Runnable {
         resetHand();
 
         makeBet();
-        System.out.println(getName() + "current balance: " + getMoney());
-        messageToSelf(getName() + "current balance: " + getMoney() + "\n");
+        System.out.println(getName()+"current balance: " + getMoney());
+        messageToSelf(getName()+"current balance: " + getMoney()+"\n");
         drawCard();
         drawCard();
 
@@ -207,5 +203,4 @@ public class PlayerHandler extends Gamer implements Runnable {
         return readyToPlay;
     }
 }
-
 
