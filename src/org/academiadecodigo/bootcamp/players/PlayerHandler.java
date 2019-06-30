@@ -201,6 +201,7 @@ public class PlayerHandler extends Gamer implements Runnable {
     }
 
 
+    // Hooker method. Should be prompt to player if money is high
     public void girlAppears() throws IOException {
 
         String[] options = {"Go with her", "Hell no! I'm gambling"};
@@ -246,22 +247,61 @@ public class PlayerHandler extends Gamer implements Runnable {
 
         switch (answerChoice) {
             case 1:
-                messageToSelf("With animal instinct, you left the table with that sweet pie. However, she makes you pay for huncka huncka, plus the room");
+                messageToSelf("With animal instinct, you left the table with that sweet pie. " +
+                        "However, she makes you pay for huncka huncka, plus the room");
                 messageToAll(getName() + " left the table with a fine real woman and a bump in his pants");
                 readyToPlay = false;
                 int roomCost = 3;
                 int girlCost = 3;
                 pay(roomCost + girlCost);
+                messageToSelf("You had some bills to pay: " + "Room: " + roomCost + " / Girl: " + girlCost);
+                messageToSelf("Your current balance is: " + getMoney());
 
 
             case 2:
                 messageToSelf("No thanks bitch! I'm here to make money!");
                 messageToSelf("Girl: You will regret this, I'm could make all your dreams come true");
-                messageToAll("Bitches are crawling around the table... Hold your pants boys! " + getName() + " can be a disguised pussy!");
+                messageToAll("Bitches are crawling around the table... Hold your pants boys! "
+                        + getName() + " can be a disguised pussy!");
                 break;
         }
-
     }
+
+        //earn money method. should be prompt to player if money is low
+        public void earnMoney() {
+
+            String[] options = {"Fuck it. I really need money to gamble", "My dignity is more important"};
+
+            MenuInputScanner scanner = new MenuInputScanner(options);
+            scanner.setMessage("Since you are low on coins, a group of big boys approaches you with a proposition." +
+                            " Do you want to join them in the dark room?" +
+                               "      ..ooo*\"\"\"**ooooo .oo*\"\"*ooo..\n" +
+                    "             .  oo*\"           \"*o.oo*\"           \"*o.\n" +
+                    "            . o\"                   'o\"                  \"o\n" +
+                    "             o                      o                     *o\n" +
+                    "           .o                       o                        'o\n" +
+                    "           o                        o                          o.\n" +
+                    "          o                          o                          o\n" +
+                    "         o                          \\o/                         o\n" +
+                    "         o                         --O--                         o\n" +
+                    "         o.                         /o\\                         .o\n" +
+                    "         \"o                          o                           o\n" +
+                    "          oo                         o                          oo\n" +
+                    "          oo.                       oo                        oo\n" +
+                    "           'ooo.                  .oo.                     ooo\n" +
+                    "            \"o \"\"oo,,        ,,oO-'Oo,       ,,,,,,..oo\"o\n" +
+                    "             o.         \"\"\"\"\"\"    oo       \"\"\"\"\"        .o\n" +
+                    "             'o                    oo                    o'\n" +
+                    "             *o                    oo                    o\n" +
+                    "              'o                    o                    o\n" +
+                    "              o                     o                   o\n" +
+                    "               o                    o                  o\n" +
+                    "               o                    o                 o\n" +
+                    "               o                    o                 o\n" +
+                    "                o                    o                 o\n" +
+                    "                o                    o                 o\n");
+        }
+
 
 
 
