@@ -13,7 +13,7 @@ import java.util.TreeSet;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class House implements Runnable {
+public class House {
 
     private ServerSocket serverSocket;
     private int myPort = 8080;
@@ -94,11 +94,26 @@ public class House implements Runnable {
 
         tableMoney = (int) (tableMoney / winners.size());
 
+        for (int i = 0; i < playerList.size(); i++) {
+
+            if (playerList.get(i).getHandValue() != maxScore) {
+
+                String winnersNames = new String();
+
+                for (int j = 0; j < winners.size(); j++) {
+                    winnersNames += winners.get(j).getName()+" ";
+                }
+
+                playerList.get(i).messageToSelf("\n-------- Hand Winner: "+winnersNames+"--------\n");
+            }
+
+        }
         for (int i = 0; i < winners.size(); i++) {
 
             winners.get(i).pay(-tableMoney);
-            winners.get(i).messageToSelf("You have won the round!! total income is: " + tableMoney + "\n");
+            winners.get(i).messageToSelf("\n$$$$$$    You have won the round!!    $$$$$$\n");
         }
+
     }
 
     public void clearLinkedList(LinkedList whatToClear) {
@@ -130,18 +145,66 @@ public class House implements Runnable {
         Socket clientSocket = serverSocket.accept();
         PlayerHandler playerHandler = new PlayerHandler(clientSocket, this);
         playerList.add(playerHandler);
-        playerHandler.messageToSelf(" __      __  ___ ___ .___.____     ___________    .___.__  .__                      \n" +
-                "/  \\    /  \\/   |   \\|   |    |    \\_   _____/  __| _/|  | |__| ____    ____  ______\n" +
-                "\\   \\/\\/   /    ~    \\   |    |     |    __)_  / __ | |  | |  |/    \\  / ___\\/  ___/\n" +
-                " \\        /\\    Y    /   |    |___  |        \\/ /_/ | |  |_|  |   |  \\/ /_/  >___ \\ \n" +
-                "  \\__/\\  /  \\___|_  /|___|_______ \\/_______  /\\____ | |____/__|___|  /\\___  /____  >\n" +
-                "       \\/         \\/             \\/        \\/      \\/              \\//_____/     \\/ \n" +
-                "__________.__                 __        ____.              __                       \n" +
-                "\\______   \\  | _____    ____ |  | __   |    |____    ____ |  | __                   \n" +
-                " |    |  _/  | \\__  \\ _/ ___\\|  |/ /   |    \\__  \\ _/ ___\\|  |/ /                   \n" +
-                " |    |   \\  |__/ __ \\\\  \\___|    </\\__|    |/ __ \\\\  \\___|    <                    \n" +
-                " |______  /____(____  /\\___  >__|_ \\________(____  /\\___  >__|_ \\                   \n" +
-                "        \\/          \\/     \\/     \\/             \\/     \\/     \\/                   \n");
+        playerHandler.messageToSelf("" +
+                "                                 _______                                \n" +
+                "                        _,.--==###\\_/=###=-.._                         \n" +
+                "                    ..-'     _.--\\\\_//---.    `-..                     \n" +
+                "                 ./'    ,--''     \\_/     `---.   `\\.                  \n" +
+                "               ./ \\ .,-'      _,,......__      `-. / \\.                \n" +
+                "             /`. ./\\'    _,.--'':_:'\"`:'`-..._    /\\. .'\\              \n" +
+                "            /  .'`./   ,-':\":._.:\":._.:\"+._.:`:.  \\.'`.  `.            \n" +
+                "          ,'  //    .-''\"`:_:'\"`:_:'\"`:_:'\"`:_:'`.     \\   \\           \n" +
+                "         /   ,'    /'\":._.:\":._.:\":._.:\":._.:\":._.`.    `.  \\          \n" +
+                "        /   /    ,'`:_:'\"`:_:'\"`:_:'\"`:_:'\"`:_:'\"`:_\\     \\  \\         \n" +
+                "       ,\\\\ ;     /_.:\":._.:\":._.:\":._.:\":._.:\":._.:\":\\     ://,        \n" +
+                "       / \\\\     /'\"`:_:'\"`:_:'\"`:_:'\"`:_:'\"`:_:'\"`:_:'\\    // \\.       \n" +
+                "      |//_ \\   ':._.:\":._.+\":._.:\":._.:\":._.:\":._.:\":._\\  / _\\\\ \\      \n" +
+                "     /___../  /_:'\"`:_:'\"`:_:'\"`:_:'\"`:_:'\"`:_:'\"`:_:'\"'. \\..__ |      \n" +
+                "      |  |    '\":._.:\":._.:\":._.:\":._.:\":._.:\":._.:\":._.|    |  |      \n" +
+                "      |  |    |\":._.:\":._.:\":._.:\":._.:\":._.+\":._.:\":._.|    |  |      \n" +
+                "      |  :    |_:'\"`:_:'\"`:_+'\"`:_:'\"`:_:'\"`:_:'\"`:_:'\"`|    ; |       \n" +
+                "      |   \\   \\.:._.:\":._.:\":._.:\":._.:\":._.:\":._.:\":._|    /  |       \n" +
+                "       \\   :   \\:'\"`:_:'\"`:_:'\"`:_:'\"`:_:'\"`:_:'\"`:_:'.'   ;  |        \n" +
+                "        \\  :    \\._.:\":._.:\":._.:\":._.:\":._.:\":._.:\":,'    ;  /        \n" +
+                "        `.  \\    \\..--:'\"`:_:'\"`:_:'\"`:_:'\"`:_:'\"`-../    /  /         \n" +
+                "         `__.`.'' _..+'._.:\":._.:\":._.:\":._.:\":.`+._  `-,:__`          \n" +
+                "      .-''    _ -' .'| _________________________ |`.`-.     `-.._      \n" +
+                "_____'   _..-|| :.' .+/;;';`;`;;:`)+(':;;';',`\\;\\|. `,'|`-.      `_____\n" +
+                "      .-'   .'.'  :- ,'/,',','/ /./|\\.\\ \\`,`,-,`.`. : `||-.`-._        \n" +
+                "          .' ||.-' ,','/,' / / / + : + \\ \\ \\ `,\\ \\ `.`-||  `.  `-.     \n" +
+                "       .-'   |'  _','<', ,' / / // | \\\\ \\ \\ `, ,`.`. `. `.   `-.       \n" +
+                "                                                                       \n" +
+                "                               WELCOME TO:                             \n" +
+
+                "  ____     ____    _   _        _    ____    _____            \n" +
+                " |  _ \\   / __ \\  | \\ | |      | |  / __ \\  |_   _|     /\\    \n" +
+                " | |_) | | |  | | |  \\| |      | | | |  | |   | |      /  \\   \n" +
+                " |  _ <  | |  | | | . ` |  _   | | | |  | |   | |     / /\\ \\  \n" +
+                " | |_) | | |__| | | |\\  | | |__| | | |__| |  _| |_   / ____ \\ \n" +
+                " |____/   \\____/  |_| \\_|  \\____/   \\____/  |_____| /_/    \\_\\\n" +
+                "                                                              \n" +
+                "                                                              \n" +
+
+                "  ____    _                  _                    _____          _                  _    \n" +
+                " |  _ \\  | |                | |          /\\      / ____|        | |                | |   \n" +
+                " | |_) | | |   __ _    ___  | | __      /  \\    | |             | |   __ _    ___  | | __\n" +
+                " |  _ <  | |  / _` |  / __| | |/ /     / /\\ \\   | |         _   | |  / _` |  / __| | |/ /\n" +
+                " | |_) | | | | (_| | | (__  |   <     / ____ \\  | |____    | |__| | | (_| | | (__  |   < \n" +
+                " |____/  |_|  \\__,_|  \\___| |_|\\_\\   /_/    \\_\\  \\_____|    \\____/   \\__,_|  \\___| |_|\\_\\\n" +
+                "                                                                                         \n" +
+                "                                                                                         \n"+
+
+                "                            .-------------------.\n" +
+                "                            |  W A R N I N G !  |\n" +
+                "                            |                   |\n" +
+                "                            |  It may contain   |\n" +
+                "                            |     nudity and    |\n" +
+                "                            |  violent content  |\n" +
+                "                            |                   |\n" +
+                "                            |        18+        |\n" +
+                "                            `-------------------'\n\n"
+        );
+
         fixedPool.submit(playerHandler);
         //playerHandler.idQuestion();
 
@@ -192,11 +255,22 @@ public class House implements Runnable {
         if (playerList.size() > 1 && readyToPlay == true) {
 
             while (!gameOver) {
+
+                for (int i = 1; i < playerList.size(); i++) {
+
+                    playerList.get(i).messageToSelf("\nWanting for your turn!!\n");
+                }
+
                 startRound();
                 checkWhoWon();
                 roundCounter++;
                 if (roundCounter == 10) {
                     gameOver = true;
+                }
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
             endingMessages();
@@ -214,10 +288,10 @@ public class House implements Runnable {
         }
     }
 
-    @Override
-    public void run() {
-
+    public void removePlayer(PlayerHandler playerHandler){
+        playerList.remove(playerHandler);
     }
+
 } // the end
 
 
