@@ -29,7 +29,7 @@ public class PlayerHandler extends Gamer implements Runnable {
 
 
     public PlayerHandler(Socket clientSocket, House house) {
-        synchronized (house.getPlayerList()) {
+        //synchronized (house.getPlayerList()) {
             this.clientSocket = clientSocket;
             roundIsRunning = true;
             this.house = house;
@@ -41,7 +41,7 @@ public class PlayerHandler extends Gamer implements Runnable {
                 e.printStackTrace();
             }
             readyToPlay = false;
-        }
+        //}
     }
 
     @Override
@@ -126,7 +126,7 @@ public class PlayerHandler extends Gamer implements Runnable {
             switch (answerChoice) {
 
                 case 1:
-                    readyToPlay = true;
+                    this.readyToPlay = true;
                     break;
                 case 2:
 
