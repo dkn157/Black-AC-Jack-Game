@@ -228,6 +228,10 @@ public class PlayerHandler extends Gamer implements Runnable {
         if(getMoney()>9 && random<30) {
             girlAppears();
         }
+
+        if(getMoney()>0 && random<50) {
+            offerDrink();
+        }
     }
 
 
@@ -349,6 +353,7 @@ public class PlayerHandler extends Gamer implements Runnable {
         }
     }
 
+    //Drink is offered once in a while to players
     public void offerDrink() throws IOException {
 
         String[] options = {"Whiskey - Fill it up", "A glass of tap water"};
@@ -381,8 +386,18 @@ public class PlayerHandler extends Gamer implements Runnable {
                 pay(DRINK_COST);
                 messageToSelf("\nThis drink cost " +DRINK_COST+".");
                 messageToSelf("Your current balance is: "+getMoney());
-                messageToAll("The bar is open lads, but remember.... Don't drink to forget , you'll end up seeing double.");
+                messageToAll("The bar is open lads, but remember.... Don't drink too much , you'll end up seeing double.");
+                messageToAll(getName()+" is feeling a bit tipsy...");
                 break;
+
+            case 2:
+                messageToAll(getName()+ " just asked for a glass of tap water. AHAHAHHA\n");
+                messageToSelf("\nYou should be ashamed of yourself... tap Water\n?");
+                messageToSelf("\nEveryone will know how cheapskate you are\n");
+                messageToSelf("\n For being ridiculous, you will have to pay for this. Total cost: " + WATER_COST+".");
+                pay(DRINK_COST);
+                messageToSelf("\nYour current balance is "+ getMoney());
+
 
 
         }
