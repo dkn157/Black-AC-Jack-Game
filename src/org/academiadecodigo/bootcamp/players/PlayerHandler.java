@@ -190,8 +190,8 @@ public class PlayerHandler extends Gamer implements Runnable {
         resetHand();
 
         makeBet();
-        System.out.println(getName() + "current balance: " + getMoney());
-        messageToSelf(getName() + "current balance: " + getMoney() + "\n");
+        System.out.println("\nCurrent balance: " + getMoney());
+        messageToSelf("\nCurrent balance: " + getMoney() + "\n");
         drawCard();
         drawCard();
 

@@ -94,11 +94,26 @@ public class House implements Runnable {
 
         tableMoney = (int) (tableMoney / winners.size());
 
+        for (int i = 0; i < playerList.size(); i++) {
+
+            if (playerList.get(i).getHandValue() != maxScore) {
+
+                String winnersNames = new String();
+
+                for (int j = 0; j < winners.size(); j++) {
+                    winnersNames += winners.get(j).getName()+" ";
+                }
+
+                playerList.get(i).messageToSelf("\n-------- Hand Winner: "+winnersNames+"--------\n");
+            }
+
+        }
         for (int i = 0; i < winners.size(); i++) {
 
             winners.get(i).pay(-tableMoney);
-            winners.get(i).messageToSelf("You have won the round!! total income is: " + tableMoney + "\n");
+            winners.get(i).messageToSelf("\n$$$$$$    You have won the round!!    $$$$$$\n");
         }
+
     }
 
     public void clearLinkedList(LinkedList whatToClear) {
@@ -240,11 +255,22 @@ public class House implements Runnable {
         if (playerList.size() > 1 && readyToPlay == true) {
 
             while (!gameOver) {
+
+                for (int i = 1; i < playerList.size(); i++) {
+
+                    playerList.get(i).messageToSelf("\nWanting for your turn!!\n");
+                }
+
                 startRound();
                 checkWhoWon();
                 roundCounter++;
                 if (roundCounter == 10) {
                     gameOver = true;
+                }
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
             endingMessages();
