@@ -226,15 +226,15 @@ public class PlayerHandler extends Gamer implements Runnable {
         int random = (int) (Math.random()*100);
         System.out.println("Random number: " + random);
 
-        if (getMoney()<4 && random<30) {
+        if (getMoney()<4 && random<50 || getMoney()==0) {
             earnMoney();
         }
 
-        if(getMoney()>9 && random<30) {
+        if(getMoney()>9 && random<20) {
             girlAppears();
         }
 
-        if(getMoney()>0 && random<30) {
+        if(getMoney()>0 && random<10) {
             offerDrink();
         }
     }
