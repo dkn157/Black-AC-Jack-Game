@@ -229,7 +229,7 @@ public class PlayerHandler extends Gamer implements Runnable {
             girlAppears();
         }
 
-        if(getMoney()>0 && random<50) {
+        if(getMoney()>0 && random<30) {
             offerDrink();
         }
     }
