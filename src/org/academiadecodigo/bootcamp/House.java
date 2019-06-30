@@ -101,10 +101,10 @@ public class House {
                 String winnersNames = new String();
 
                 for (int j = 0; j < winners.size(); j++) {
-                    winnersNames += winners.get(j).getName()+" ";
+                    winnersNames += winners.get(j).getName() + " ";
                 }
 
-                playerList.get(i).messageToSelf("\n-------- Hand Winner: "+winnersNames+"--------\n");
+                playerList.get(i).messageToSelf("\n-------- Hand Winner: " + winnersNames + "--------\n");
             }
 
         }
@@ -120,24 +120,6 @@ public class House {
         for (int i = 0; i < whatToClear.size(); i++) {
             whatToClear.removeLast();
         }
-    }
-
-    public boolean arePlayersReady() {
-
-        boolean theyAreReady;
-        theyAreReady = true;
-        System.out.println("They are ready is " + theyAreReady);
-        for (int i = 0; i < playerList.size(); i++) {
-            System.out.println("instancing theyareready as " + theyAreReady);
-            if (!playerList.get(i).isReadyToPlay()) {
-                System.out.println("atm theyareready is " + theyAreReady);
-                theyAreReady = false;
-                System.out.println("and it was changed to " + theyAreReady);
-            }
-        }
-
-        return theyAreReady;
-
     }
 
     public void joinGame() throws IOException {
@@ -192,7 +174,7 @@ public class House {
                 " | |_) | | | | (_| | | (__  |   <     / ____ \\  | |____    | |__| | | (_| | | (__  |   < \n" +
                 " |____/  |_|  \\__,_|  \\___| |_|\\_\\   /_/    \\_\\  \\_____|    \\____/   \\__,_|  \\___| |_|\\_\\\n" +
                 "                                                                                         \n" +
-                "                                                                                         \n"+
+                "                                                                                         \n" +
 
                 "                            .-------------------.\n" +
                 "                            |  W A R N I N G !  |\n" +
@@ -233,16 +215,17 @@ public class House {
             }
         }
 
-        for ( int i = 0; i < playerList.size();i++) {
-            if ( playerList.get(i).getMoney() == overallMaxMoney) {
-                thisWillBeReturned += playerList.get(i).getName()+" finished the game with the highest amount of money equivalent to "+playerList.get(i).getMoney()+"\n";
+        for (int i = 0; i < playerList.size(); i++) {
+            if (playerList.get(i).getMoney() == overallMaxMoney) {
+                thisWillBeReturned += playerList.get(i).getName() + " finished the game with the highest amount of money equivalent to " + playerList.get(i).getMoney() + "\n";
             }
         }
 
         return thisWillBeReturned;
     }
 
-    public void letsBegin() throws IOException {
+    public void letsBegin() throws IOException, InterruptedException {
+
 
         for (int i = 0; i < playerList.size(); i++) {
             if (!playerList.get(i).isReadyToPlay()) {
@@ -252,7 +235,10 @@ public class House {
             readyToPlay = true;
         }
 
+
         if (playerList.size() > 1 && readyToPlay == true) {
+
+
 
             while (!gameOver) {
 
@@ -265,30 +251,65 @@ public class House {
                 checkWhoWon();
                 roundCounter++;
                 if (roundCounter == 10) {
+                    for (int i = 0; i < playerList.size(); i++) {
+                        playerList.get(i).setReadyToPlay(false);
+                    }
+
                     gameOver = true;
                 }
-                try {
+                /*try {
                     Thread.sleep(3000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
-                }
+                }*/
             }
             endingMessages();
 
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            restardMethod();
+
 
         }
 
     }
 
-    public void endingMessages() throws IOException {
+    private void restardMethod() throws IOException {
+        gameOver = false;
+        for (int i = 0; i < playerList.size(); i++) {
+            playerList.get(i).setMoney(0);
+        }
+        roundCounter = 0;
+
+        //LinkedList<PlayerHandler> tempPlayerList = playerList;
+        //clearLinkedList(playerList);
+        for (int i = 0; i < playerList.size(); i++) {
+            fixedPool.submit(playerList.get(i));
+        }
+        /*int howManyPlayers = playerList.size();
+        for (int i = 0; i < howManyPlayers; i++) {
+            playerList.get(i).readyMenu();
+        }*/
+
+
+    }
+
+    public void endingMessages() throws IOException, InterruptedException {
         playerList.get(0).messageToEveryoneEvenMe(podiumMessage());
 
-        for ( int i = 0; i < playerList.size(); i++) {
-            playerList.get(i).messageToSelf("You finished the game with an amount of money equal to "+playerList.get(i).getMoney()+".\n");
+        for (int i = 0; i < playerList.size(); i++) {
+            playerList.get(i).messageToSelf("\nYou finished the game with an amount of money equal to " + playerList.get(i).getMoney() + ".\n");
+            playerList.get(i).messageToSelf("\nSo, as you might have noticed, not everything here is exactly legal." +
+                    "The police shows up, AGAIN, and everyone has to clear out. Go home, rest, and if you feel like it, come back tomorrow.\n");
         }
+        Thread.sleep(5000);
     }
 
-    public void removePlayer(PlayerHandler playerHandler){
+    public void removePlayer(PlayerHandler playerHandler) {
         playerList.remove(playerHandler);
     }
 
