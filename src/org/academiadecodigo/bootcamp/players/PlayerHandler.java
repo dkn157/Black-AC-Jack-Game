@@ -1,5 +1,6 @@
 package org.academiadecodigo.bootcamp.players;
 
+import org.academiadecodigo.bootcamp.Ascii;
 import org.academiadecodigo.bootcamp.House;
 import org.academiadecodigo.bootcamp.Prompt;
 import org.academiadecodigo.bootcamp.deck.Card;
@@ -279,7 +280,7 @@ public class PlayerHandler extends Gamer implements Runnable {
 
     /**
      *
-     * ASCII
+     * Ascii
      * ART
      * METHODS
      *      *
@@ -293,42 +294,7 @@ public class PlayerHandler extends Gamer implements Runnable {
         String[] options = {"Go with her", "Hell no! I'm gambling"};
 
         MenuInputScanner scanner = new MenuInputScanner(options);
-        scanner.setMessage("A girl appears next to you, inviting you to check-in into a room\n" +
-                "\n\n\n       .-'\"\"\"''---.___\n" +
-                "          .'               \"'-.___\n" +
-                "         _'              _'-\"'\"\"\"  \"\"\"-\n" +
-                "        /    7        .'\"              \"->\n" +
-                "       .    .|     _-'                   '.\n" +
-                "      .  .'\"  :   '.         _.------._  ''\n" +
-                "     .  -      . .'       .-'  \"-   .' \\ :\n" +
-                "     | '        >       .'.''\"\\\"-   .'\\\"_'\n" +
-                "     |'        <      .'   :__/  : :_.':'\n" +
-                "  .--'-._      :   .--:     -._.'  '._.'\n" +
-                " '>      '.     '. | '              .' :\n" +
-                "'.        :'     '-'.____        .__.  '\n" +
-                " /         :             :.          .'\n" +
-                " \\.       /              | '\"-_  __-'\n" +
-                "   \\.'-'\"'         .'\"\":''    :-\"\"\"\"'.\n" +
-                "                  :   :               .\n" +
-                "                  |  :                :\n" +
-                "                  | :           .''.  :\n" +
-                "                  |.'.        _.:   '.:\n" +
-                "                  |    '---'\"\"  :    :\"\n" +
-                "                  |     '      :     :\n" +
-                "                  .'.___:._   .'    .\n" +
-                "                   .  '    '\"'.     '\n" +
-                "                   |   :      '    :\n" +
-                "                   :    .    :    ' :\n" +
-                "     _.-'\"'--..__   :   : . :    .  _:\n" +
-                "  .'      .       \"-:   :   '   ..-\"  :\n" +
-                " (         '-       :   :._:   /   _.--\"\"\"--._\n" +
-                "  '          '. _....:  : .   / .-'           '.\n" +
-                "   '           :  .\"\" \"\"'-'  /-\"               )\n" +
-                "    '._        :  :     ..-'                  /\n" +
-                "       '-._     \\'' _ .'\"\"\"\"\"\"'-.         _.-\n" +
-                "          .'--.__ .' '           - ____.-'\n" +
-                "         :         \"\":-.._______.'\n" +
-                "          '-.....-'''                Hello honey, wanna party?");
+        scanner.setMessage("A girl appears next to you, inviting you to check-in into a room\n" + Ascii.getGirl());
         int answerChoice = prompt.getUserInput(scanner);
 
         switch (answerChoice) {
@@ -386,31 +352,7 @@ public class PlayerHandler extends Gamer implements Runnable {
                 }
                 messageToSelf("\nYour dignity earned you a total of: "+SHEMALE_MONEY);
                 messageToSelf("\nYour current balance is: "+getMoney());
-                messageToSelf("\n\n\n..ooo*\"\"\"**ooooo .oo*\"\"*ooo..\n" +
-                        "             .  oo*\"           \"*o.oo*\"           \"*o.\n" +
-                        "            . o\"                   'o\"                  \"o\n" +
-                        "             o                      o                     *o\n" +
-                        "           .o                       o                        'o\n" +
-                        "           o                        o                          o.\n" +
-                        "          o                          o                          o\n" +
-                        "         o                          \\o/                         o\n" +
-                        "         o                        -(    )-                         o\n" +
-                        "         o.                         /o\\                         .o\n" +
-                        "         \"o                          o                           o\n" +
-                        "          oo                         o                          oo\n" +
-                        "          oo.                       oo                        oo\n" +
-                        "           'ooo.                  .oo.                     ooo\n" +
-                        "            \"o \"\"oo,,        ,,oO-'Oo,       ,,,,,,..oo\"o\n" +
-                        "             o.         \"\"\"\"\"\"    oo       \"\"\"\"\"      .o\n" +
-                        "             'o                    oo                    o'\n" +
-                        "             *o                    oo                    o\n" +
-                        "              'o                    o                    o\n" +
-                        "              o                     o                   o\n" +
-                        "               o                    o                  o\n" +
-                        "               o                    o                 o\n" +
-                        "               o                    o                 o\n" +
-                        "                o                    o                 o\n" +
-                        "                o                    o                 o\n");
+                messageToSelf(Ascii.getAss());
                 messageToAll("\n" +getName() + " leaves the table, heading into a dark room with some " +
                         "suspicious shemales \n");
 
@@ -448,24 +390,7 @@ public class PlayerHandler extends Gamer implements Runnable {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                messageToSelf("\n\n\n     |    |\n" +
-                        "        |    |\n" +
-                        "    |____|\n" +
-                        "    |    |\n" +
-                        "    (    )\n" +
-                        "    )    (\n" +
-                        "  .'      `.\n" +
-                        " /          \\\n" +
-                        "|------------|\n" +
-                        "|JACK DANIELS|\n" +
-                        "|    ----    |\n" +
-                        "|   (No.7)   |\n" +
-                        "|    ----    |\n" +
-                        "| Tennessee  |\n" +
-                        "|  WHISKEY   |\n" +
-                        "|  40% Vol.  |\n" +
-                        "|------------|\n" +
-                        "|____________|");
+                messageToSelf(Ascii.getJack());
                 pay(DRINK_COST);
                 messageToSelf("\n\nThis drink costs " + DRINK_COST + ".\n");
                 messageToSelf("Your current balance is: " + getMoney());
