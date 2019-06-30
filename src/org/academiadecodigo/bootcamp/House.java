@@ -24,6 +24,7 @@ public class House {
     private boolean gameOver;
     private int roundCounter;
     private boolean readyToPlay;
+    private int rounds;
 
 
     public House() {
@@ -33,6 +34,7 @@ public class House {
         deck = new Deck();
         gameOver = false;
         roundCounter = 0;
+        rounds = 1;
 
     }
 
@@ -103,8 +105,8 @@ public class House {
                 for (int j = 0; j < winners.size(); j++) {
                     winnersNames += winners.get(j).getName() + " ";
                 }
+                playerList.get(0).messageToEveryoneEvenMe("\n-------- Hand Winner: " + winnersNames + "--------\n");
 
-                playerList.get(i).messageToSelf("\n-------- Hand Winner: " + winnersNames + "--------\n");
             }
 
         }
@@ -114,6 +116,7 @@ public class House {
             winners.get(i).messageToSelf("\n$$$$$$    You have won the round!!    $$$$$$\n");
         }
 
+        tableMoney = 0;
     }
 
     public void clearLinkedList(LinkedList whatToClear) {
@@ -239,7 +242,6 @@ public class House {
         if (playerList.size() > 1 && readyToPlay == true) {
 
 
-
             while (!gameOver) {
 
                 for (int i = 1; i < playerList.size(); i++) {
@@ -250,7 +252,7 @@ public class House {
                 startRound();
                 checkWhoWon();
                 roundCounter++;
-                if (roundCounter == 10) {
+                if (roundCounter == rounds) {
                     for (int i = 0; i < playerList.size(); i++) {
                         playerList.get(i).setReadyToPlay(false);
                     }
