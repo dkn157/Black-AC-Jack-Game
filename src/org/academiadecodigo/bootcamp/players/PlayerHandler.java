@@ -34,6 +34,7 @@ public class PlayerHandler extends Gamer implements Runnable {
     private final int BONUS_MONEY = 5;
     private final int FLOWER_COST = 5;
     private final int BOUQUET_COST = 20;
+    private final int ROBBED_MONEY = 20;
 
 
     public PlayerHandler(Socket clientSocket, House house) {
@@ -244,24 +245,32 @@ public class PlayerHandler extends Gamer implements Runnable {
 
 
         //resetPlayerCards();
-        int random = (int) (Math.random()*100);
+        int random = (int) ((Math.random()*100)+1);
         System.out.println("Random number: " + random);
 
-        if (getMoney()<40 && random<10 || getMoney()==0) {
+        if (getMoney()<45 && random<10 || getMoney()==10) {
             earnMoney();
         }
 
-        if(getMoney()>80 && random<10) {
+        if(getMoney()>70 && random<10) {
             girlAppears();
         }
 
-        if(getMoney()>0 && random<10) {
+        if(getMoney()>0 && random<20) {
             offerDrink();
         }
 
         if(getMoney()<= 0) {
             try {
                 bouncerApproach();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (getMoney()>0 && random<10) {
+            try {
+                flowerSeller();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -442,6 +451,7 @@ public class PlayerHandler extends Gamer implements Runnable {
 
     }
 
+    //Special seller
     public void flowerSeller() throws IOException, InterruptedException {
 
         String[] options = {"Buy a flower", "Buy a bouquet", "Send the indian away"};
@@ -515,9 +525,15 @@ public class PlayerHandler extends Gamer implements Runnable {
                         " `.   |  |                   >-  \\\n" +
                         "  |   `  |        o)        /_    )");
                 messageToAll(getName()+" went for a quickie in the bathroom");
+                break;
 
-
-
+            case 3:
+                pay(ROBBED_MONEY);
+                messageToSelf("\nYou should be nice to people. You've just got robbed for " +ROBBED_MONEY);
+                messageToSelf("\nCurrent balance: "+getMoney());
+                messageToAll(getName() +" as been robbed.");
+                break;
+        }
     }
-    }
+
 } // the end
