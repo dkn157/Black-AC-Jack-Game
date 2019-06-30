@@ -10,16 +10,10 @@ public class Main {
 
         Deck test = new Deck();
         House house = null;
-        try {
-            house = new House();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        house = new House();
         try {
             house.init();
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
