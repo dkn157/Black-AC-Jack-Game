@@ -182,6 +182,57 @@ public class Ascii {
                                   "       \\/\n";
 
 
+    private static final String flower = "Chose wisely!" +
+            "\n\n\n       .888888888.\n" +
+            "             88\"P\"\"T\"T888 8o\n" +
+            "         o8o 8.8\"8 88o.\"8o 8o\n" +
+            "        88 . o88o8 8 88.\"8 88P\"o\n" +
+            "       88 o8 88 oo.8 888 8 888 88\n" +
+            "       88 88 88o888\" 88\"  o888 88\n" +
+            "       88.\"8o.\"T88P.88\". 88888 88\n" +
+            "       888.\"888.\"88P\".o8 8888 888\n" +
+            "       \"888o\"8888oo8888 o888 o8P\"\n" +
+            "        \"8888.\"\"888P\"P.888\".88P\n" +
+            "         \"88888ooo  888P\".o888\n" +
+            "           \"\"8P\"\".oooooo8888P\n" +
+            "  .oo888ooo.    8888LUCKY8\n" +
+            "o88888\"888\"88o.  \"8888\"\".88   .oo888oo..\n" +
+            " 8888\" \"88 88888.       88\".o88888888\"888.\n" +
+            " \"8888o.\"\"o 88\"88o.    o8\".888\"888\"88 \"88P\n" +
+            "  T888C.oo. \"8.\"8\"8   o8\"o888 o88\" \".=888\"\n" +
+            "   88888888o \"8 8 8  .8 .8\"88 8\"\".o888o8P\n" +
+            "    \"8888C.o8o  8 8  8\" 8 o\" ...o\"\"\"8888\n" +
+            "      \"88888888 \" 8 .8  8   88888888888\"\n" +
+            "        \"8888888o  .8o=\" o8o..o(8oo88\"\n" +
+            "            \"888\" 88\"    888888888\"\"\n" +
+            "                o8P       \"888\"\"\"\n" +
+            "          ...oo88\n" +
+            " \"8oo...oo888\"\"";
+
+
+    private static final String hooker = "          /`.   : \\_.--.\n" +
+            "  _.-----'_      .-'    \\\n" +
+            " /         `-._ '        |\n" +
+            ".                        |\n" +
+            "|                        |\n" +
+            "|                        |\n" +
+            "|    |                 \\ |\n" +
+            "|    |/                 \\|\n" +
+            "|    /                   \\\n" +
+            "|   |                     `\n" +
+            "|   | (*       '         (*)\n" +
+            "|   `         /   \\       /\n" +
+            "|    \\       /     \\     /\n" +
+            "|    |\\.__.-'       `---'\n" +
+            "|    ||                  |\n" +
+            "|    |`                  |\\\n" +
+            "`.   | \\                 \\ \\\n" +
+            " |  _|  \\                 \\ `-\n" +
+            " |   \\   \\                 \\  `\\\n" +
+            " |    \\  |                  \\   \\\n" +
+            " `.   |  |                   >-  \\\n" +
+            "  |   `  |        o)        /_    )";
+
     public String getAsciiType() {
         return asciiType;
     }
@@ -214,41 +265,12 @@ public class Ascii {
         return clubs;
     }
 
-    public static String getHearts() {
-        return hearts;
+    public static String getFlower() {
+        return flower;
     }
 
-    public String getAsciiArt(String asciiArt) {
-
-
-        if(asciiArt.equals("welcomeScreen")) {
-            asciiArt = getWelcomeScreen();
-        }
-
-        if(asciiType.equals("girl")) {
-            asciiArt = getGirl();
-        }
-
-        if(asciiType.equals(jack)) {
-            asciiArt = getJack();
-        }
-
-        if(asciiType.equals(spades)) {
-            asciiArt = getSpades();
-        }
-
-        if(asciiType.equals(clubs)) {
-            asciiArt = getClubs();
-        }
-
-        if(asciiType.equals(hearts)) {
-            asciiArt = getHearts();
-        }
-
-        if(asciiType.equals(diamonds)) {
-            asciiArt = getDiamonds();
-        }
-
-        return asciiArt;
+    public static String getHooker() {
+        return hooker;
     }
+
 }
