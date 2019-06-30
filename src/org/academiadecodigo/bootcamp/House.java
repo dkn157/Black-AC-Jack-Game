@@ -96,26 +96,24 @@ public class House {
 
         tableMoney = (int) (tableMoney / winners.size());
 
+        String winnersNames = new String();
+
         for (int i = 0; i < playerList.size(); i++) {
 
-            String winnersNames = new String();
-
             if (playerList.get(i).getHandValue() != maxScore) {
-
 
                 for (int j = 0; j < winners.size(); j++) {
                     winnersNames += winners.get(j).getName() + " ";
                 }
 
-                playerList.get(0).messageToEveryoneEvenMe("\n------------- Hand Winner: " + winnersNames + "-------------\n");
             }
-
-
-
         }
+        playerList.get(0).messageToEveryoneEvenMe("\n------------- Hand Winner: " + winnersNames + "-------------\n");
+
         for (int i = 0; i < winners.size(); i++) {
 
             winners.get(i).pay(-tableMoney);
+
             winners.get(i).messageToSelf("\n$$$$$$$$$$$$$    You have won the round!!    $$$$$$$$$$$$$$\n");
         }
 

@@ -417,11 +417,11 @@ public class PlayerHandler extends Gamer implements Runnable {
                                                 "|  WHISKEY   |\n" +
                                                 "|  40% Vol.  |\n" +
                                                 "|------------|\n" +
-                                                "|____________|dp");
+                                                "|____________|");
                 pay(DRINK_COST);
-                messageToSelf("\nThis drink cost " +DRINK_COST+".");
-                messageToSelf("Your current balance is: "+getMoney());
-                messageToAll("The bar is open lads, but remember.... Don't drink too much , you'll end up seeing double.");
+                messageToSelf("\n\nThis drink cost " +DRINK_COST+".\n");
+                messageToSelf(" Your current balance is: "+getMoney());
+                messageToAll("\nThe bar is open lads, but remember.... Don't drink too much , you'll end up seeing double. ");
                 messageToAll(getName()+" is feeling a bit tipsy...");
                 break;
 
@@ -433,9 +433,9 @@ public class PlayerHandler extends Gamer implements Runnable {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                messageToSelf("\nFor being ridiculous, you will have to pay for this. Total cost: " + WATER_COST+".");
+                messageToSelf("\nFor being ridiculous, you will have to pay for this. Total cost: " + WATER_COST+". ");
                 pay(DRINK_COST);
-                messageToSelf("Current balance is "+ getMoney() + "\n");
+                messageToSelf("Current balance:  "+ getMoney() + "\n");
 
 
 
