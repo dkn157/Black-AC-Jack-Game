@@ -23,7 +23,7 @@ public class PlayerHandler extends Gamer implements Runnable {
     private LinkedList<Card> playerHand;
     private int amountOfCardsHeld;
     private boolean stillWantToBuy;
-    public boolean readyToPlay;
+    private boolean readyToPlay;
     private final int GIRL_COST = 3;
     private final int ROOM_COST = 3;
     private final int DRINK_COST = 1;
@@ -436,6 +436,8 @@ public class PlayerHandler extends Gamer implements Runnable {
 
     }
 
-
+    public void setReadyToPlay(boolean isItReady) {
+        this.readyToPlay = isItReady;
+    }
 
 } // the end

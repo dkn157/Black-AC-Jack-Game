@@ -122,24 +122,6 @@ public class House {
         }
     }
 
-    public boolean arePlayersReady() {
-
-        boolean theyAreReady;
-        theyAreReady = true;
-        System.out.println("They are ready is " + theyAreReady);
-        for (int i = 0; i < playerList.size(); i++) {
-            System.out.println("instancing theyareready as " + theyAreReady);
-            if (!playerList.get(i).isReadyToPlay()) {
-                System.out.println("atm theyareready is " + theyAreReady);
-                theyAreReady = false;
-                System.out.println("and it was changed to " + theyAreReady);
-            }
-        }
-
-        return theyAreReady;
-
-    }
-
     public void joinGame() throws IOException {
 
         Socket clientSocket = serverSocket.accept();
@@ -265,18 +247,43 @@ public class House {
                 checkWhoWon();
                 roundCounter++;
                 if (roundCounter == 10) {
+                    for (int i = 0; i < playerList.size(); i++) {
+                        playerList.get(i).setReadyToPlay(false);
+                    }
+
                     gameOver = true;
                 }
-                try {
+                /*try {
                     Thread.sleep(3000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
-                }
+                }*/
             }
             endingMessages();
 
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            restardMethod();
+
 
         }
+
+    }
+
+    private void restardMethod() throws IOException {
+        gameOver = false;
+        for (int i = 0; i <playerList.size() ; i++) {
+            playerList.get(i).setMoney(0);
+        }
+        roundCounter = 0;
+        for (int i = 0; i < playerList.size(); i++) {
+            playerList.get(i).readyMenu();
+        }
+
 
     }
 
