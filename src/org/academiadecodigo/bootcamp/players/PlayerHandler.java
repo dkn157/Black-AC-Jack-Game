@@ -116,10 +116,18 @@ public class PlayerHandler extends Gamer implements Runnable {
         increaseHandValue(playerHand.get(amountOfCardsHeld - 1).getRank().getValue());
 
         System.out.println("Card draw:  " + playerHand.get(amountOfCardsHeld - 1).getThisCard() + "   Hand value:  " + getHandValue());
-       // System.out.println(getName() + "hand value: " + getHandValue());
+
         System.out.println("\n _______________________________________");
+
+        messageToSelf("\n" +
+                ".------.                 \n" +
+                "|      |     \n" +
+                "|      |                                       \n" +
+                "|      |      \n" +
+                "|      |                                     \n" +
+                "`------'"
+                );
         messageToSelf("\nCard draw: " + playerHand.get(amountOfCardsHeld - 1).getThisCard() + "   Hand value: " + getHandValue());
-        //messageToSelf(getName() + "hand value: " + getHandValue() + "\n");
     }
 
     public synchronized void idQuestion() throws IOException, InterruptedException {
