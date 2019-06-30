@@ -195,7 +195,7 @@ public class House implements Runnable {
                 startRound();
                 checkWhoWon();
                 roundCounter++;
-                if (roundCounter == 1) {
+                if (roundCounter == 10) {
                     gameOver = true;
                 }
             }
