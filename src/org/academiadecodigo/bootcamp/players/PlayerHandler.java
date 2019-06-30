@@ -8,6 +8,7 @@ import org.academiadecodigo.bootcamp.scanners.integer.IntegerRangeInputScanner;
 import org.academiadecodigo.bootcamp.scanners.menu.MenuInputScanner;
 import org.academiadecodigo.bootcamp.scanners.string.StringInputScanner;
 
+import java.awt.*;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.Socket;
@@ -30,6 +31,8 @@ public class PlayerHandler extends Gamer implements Runnable {
     private final int WATER_COST = 5;
     private final int SHEMALE_MONEY = 60;
     private final int BONUS_MONEY = 5;
+    private final int FLOWER_COST = 5;
+    private final int BOUQUET_COST = 20;
 
 
     public PlayerHandler(Socket clientSocket, House house) {
@@ -124,14 +127,7 @@ public class PlayerHandler extends Gamer implements Runnable {
 
         messageToSelf("\n"+playerHand.get(amountOfCardsHeld - 1).getCardArt());
 
-//        messageToSelf("\n" +
-//                ".------.                 \n" +
-//                "|      |     \n" +
-//                "|      |                                       \n" +
-//                "|      |      \n" +
-//                "|      |                                     \n" +
-//                "`------'"
-//                );
+
         messageToSelf("\nCard draw: " + playerHand.get(amountOfCardsHeld - 1).getThisCard() + "   Hand value: " + getHandValue());
 
         //messageToSelf(playerHand.get(amountOfCardsHeld - 1).getCardArt());
@@ -261,6 +257,14 @@ public class PlayerHandler extends Gamer implements Runnable {
         if(getMoney()>0 && random<10) {
             offerDrink();
         }
+
+        if(getMoney()<= 0) {
+            try {
+                bouncerApproach();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 
@@ -330,7 +334,8 @@ public class PlayerHandler extends Gamer implements Runnable {
         switch (answerChoice) {
             case 1:
                 messageToSelf("\nWith animal instinct, you left the table with that sweet pie. " +
-                        "However, she makes you pay for huncka huncka, plus the room\n");
+                        "\nHowever, she makes you pay for huncka\n" +
+                        " \nhuncka, plus the room\n");
                 messageToAll("\n" + getName() + " left the table with a fine real woman and a bump in his pants\n");
                 int bill = ROOM_COST+GIRL_COST;
                 pay(bill);
@@ -462,7 +467,7 @@ public class PlayerHandler extends Gamer implements Runnable {
                         "|------------|\n" +
                         "|____________|");
                 pay(DRINK_COST);
-                messageToSelf("\n\nThis drink cost " + DRINK_COST + ".\n");
+                messageToSelf("\n\nThis drink costs " + DRINK_COST + ".\n");
                 messageToSelf("Your current balance is: " + getMoney());
                 messageToAll("\nThe bar is open lads, but remember.... Don't drink too much , you'll end up seeing double. ");
                 messageToAll(getName() + " is feeling a bit tipsy...\n");
@@ -499,6 +504,7 @@ public class PlayerHandler extends Gamer implements Runnable {
                     earnMoney();
                     Thread.sleep(1000);
                     messageToSelf("\nThat's what happens to losers");
+                    break;
 
                 case 2:
                     earnMoney();
@@ -506,13 +512,87 @@ public class PlayerHandler extends Gamer implements Runnable {
                     messageToSelf("\nWe knew you would like more of that! Hope you can sit down during " +
                             "you next rounds\n");
                     messageToAll(getName()+" loved the dark room so much he was asking for more");
-
-
-        }
-
+                    break;
+            }
 
     }
 
+    public void flowerSeller() throws IOException, InterruptedException {
+
+        String[] options = {"Buy a flower", "Buy a bouquet", "Send the indian away"};
+
+        MenuInputScanner scanner = new MenuInputScanner(options);
+        scanner.setMessage("\nAn Indian flower seller approaches. Quer froooo? My flowers can be very special. " +
+                "Chose wisely!" +
+                "\n\n\n       .888888888.\n" +
+                "             88\"P\"\"T\"T888 8o\n" +
+                "         o8o 8.8\"8 88o.\"8o 8o\n" +
+                "        88 . o88o8 8 88.\"8 88P\"o\n" +
+                "       88 o8 88 oo.8 888 8 888 88\n" +
+                "       88 88 88o888\" 88\"  o888 88\n" +
+                "       88.\"8o.\"T88P.88\". 88888 88\n" +
+                "       888.\"888.\"88P\".o8 8888 888\n" +
+                "       \"888o\"8888oo8888 o888 o8P\"\n" +
+                "        \"8888.\"\"888P\"P.888\".88P\n" +
+                "         \"88888ooo  888P\".o888\n" +
+                "           \"\"8P\"\".oooooo8888P\n" +
+                "  .oo888ooo.    8888LUCKY8\n" +
+                "o88888\"888\"88o.  \"8888\"\".88   .oo888oo..\n" +
+                " 8888\" \"88 88888.       88\".o88888888\"888.\n" +
+                " \"8888o.\"\"o 88\"88o.    o8\".888\"888\"88 \"88P\n" +
+                "  T888C.oo. \"8.\"8\"8   o8\"o888 o88\" \".=888\"\n" +
+                "   88888888o \"8 8 8  .8 .8\"88 8\"\".o888o8P\n" +
+                "    \"8888C.o8o  8 8  8\" 8 o\" ...o\"\"\"8888\n" +
+                "      \"88888888 \" 8 .8  8   88888888888\"\n" +
+                "        \"8888888o  .8o=\" o8o..o(8oo88\"\n" +
+                "            \"888\" 88\"    888888888\"\"\n" +
+                "                o8P       \"888\"\"\"\n" +
+                "          ...oo88\n" +
+                " \"8oo...oo888\"\"");
+
+        int answerQuestion = prompt.getUserInput(scanner);
+
+        switch (answerQuestion) {
+
+            case 1:
+                pay(FLOWER_COST);
+                messageToSelf("\nYou've just bought a plastic flower, smells like curry\n");
+                messageToSelf("\nThis flowers costs: "+FLOWER_COST+". Current balance is: "+getMoney());
+                messageToAll(getName()+ " bought a smelly plastic flower");
+                break;
+
+            case 2:
+                pay(BOUQUET_COST);
+                messageToSelf("\nYou've just bought an incredible bouquet and you offered to a sweetie\n");
+                Thread.sleep(1000);
+                messageToSelf("\nIt's free huncka huncka time\n");
+                Thread.sleep(1000);
+                messageToSelf("          /`.   : \\_.--.\n" +
+                        "  _.-----'_      .-'    \\\n" +
+                        " /         `-._ '        |\n" +
+                        ".                        |\n" +
+                        "|                        |\n" +
+                        "|                        |\n" +
+                        "|    |                 \\ |\n" +
+                        "|    |/                 \\|\n" +
+                        "|    /                   \\\n" +
+                        "|   |                     `\n" +
+                        "|   | (*       '         (*)\n" +
+                        "|   `         /   \\       /\n" +
+                        "|    \\       /     \\     /\n" +
+                        "|    |\\.__.-'       `---'\n" +
+                        "|    ||                  |\n" +
+                        "|    |`                  |\\\n" +
+                        "`.   | \\                 \\ \\\n" +
+                        " |  _|  \\                 \\ `-\n" +
+                        " |   \\   \\                 \\  `\\\n" +
+                        " |    \\  |                  \\   \\\n" +
+                        " `.   |  |                   >-  \\\n" +
+                        "  |   `  |        o)        /_    )");
+                messageToAll(getName()+" went for a quickie in the bathroom");
 
 
+
+    }
+    }
 } // the end
