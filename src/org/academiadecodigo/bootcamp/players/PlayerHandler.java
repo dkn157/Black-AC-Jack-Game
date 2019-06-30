@@ -214,7 +214,7 @@ public class PlayerHandler extends Gamer implements Runnable {
         clientSocket.getOutputStream().write(whatToSay.getBytes());
     }
 
-    public void playerRound() throws IOException {
+    public void playerRound() throws IOException, InterruptedException {
 
         //feita a aposta, dinheiro na mesa
         //jogador recebe 2 cartas, que são ao mesmo tempo tiradas do deck, tem seus valores adicionados à mão
@@ -298,7 +298,7 @@ public class PlayerHandler extends Gamer implements Runnable {
      */
 
     // Hooker method. Should be prompt to player if money is high
-    public void girlAppears() throws IOException {
+    public void girlAppears() throws IOException, InterruptedException {
 
         String[] options = {"Go with her", "Hell no! I'm gambling"};
 
@@ -320,6 +320,7 @@ public class PlayerHandler extends Gamer implements Runnable {
                     e.printStackTrace();
                 }
                 messageToSelf("\nYou had some bills to pay: "+ "Total: " + bill + " (Room: " + ROOM_COST + " / Girl: " + GIRL_COST+")");
+                Thread.sleep(1000);
                 messageToSelf("\nYour current balance is: " + getMoney() + "\n");
                 break;
 
@@ -338,7 +339,7 @@ public class PlayerHandler extends Gamer implements Runnable {
     }
 
     //earn money method. should be prompt to player if money is low
-    public void earnMoney() throws IOException {
+    public void earnMoney() throws IOException, InterruptedException {
 
         String[] options = {"Fuck it. I really need money to gamble", "My dignity is more important"};
 
@@ -360,7 +361,9 @@ public class PlayerHandler extends Gamer implements Runnable {
                     e.printStackTrace();
                 }
                 messageToSelf("\nYour dignity earned you a total of: "+SHEMALE_MONEY);
+                Thread.sleep(1000);
                 messageToSelf("\nYour current balance is: "+getMoney());
+                Thread.sleep(1000);
                 messageToSelf(Ascii.getAss());
                 messageToAll("\n" +getName() + " leaves the table, heading into a dark room with some " +
                         "suspicious shemales \n");
@@ -383,7 +386,7 @@ public class PlayerHandler extends Gamer implements Runnable {
     }
 
     //Drink is offered once in a while to players
-    public void offerDrink() throws IOException {
+    public void offerDrink() throws IOException, InterruptedException {
 
         String[] options = {"Whiskey - Fill it up", "A glass of tap water"};
 
@@ -400,10 +403,13 @@ public class PlayerHandler extends Gamer implements Runnable {
                     e.printStackTrace();
                 }
                 messageToSelf(Ascii.getJack());
+                Thread.sleep(1000);
                 pay(DRINK_COST);
                 messageToSelf("\n\nThis drink costs " + DRINK_COST + ".\n");
+                Thread.sleep(1000);
                 messageToSelf("Your current balance is: " + getMoney());
                 messageToAll("\nThe bar is open lads, but remember.... Don't drink too much , you'll end up seeing double. ");
+                Thread.sleep(1000);
                 messageToAll(getName() + " is feeling a bit tipsy...\n");
                 break;
 
@@ -417,6 +423,7 @@ public class PlayerHandler extends Gamer implements Runnable {
                 }
                 messageToSelf("\nFor being ridiculous, you will have to pay for this. Total cost: " + WATER_COST + ". ");
                 pay(WATER_COST);
+                Thread.sleep(1000);
                 messageToSelf("Current balance:  " + getMoney() + "\n");
         }
     }
@@ -492,6 +499,7 @@ public class PlayerHandler extends Gamer implements Runnable {
             case 1:
                 pay(FLOWER_COST);
                 messageToSelf("\nYou've just bought a plastic flower, smells like curry\n");
+                Thread.sleep(1000);
                 messageToSelf("\nThis flowers costs: "+FLOWER_COST+". Current balance is: "+getMoney());
                 messageToAll(getName()+ " bought a smelly plastic flower");
                 break;
@@ -530,6 +538,7 @@ public class PlayerHandler extends Gamer implements Runnable {
             case 3:
                 pay(ROBBED_MONEY);
                 messageToSelf("\nYou should be nice to people. You've just got robbed for " +ROBBED_MONEY);
+                Thread.sleep(1000);
                 messageToSelf("\nCurrent balance: "+getMoney());
                 messageToAll(getName() +" as been robbed.");
                 break;
