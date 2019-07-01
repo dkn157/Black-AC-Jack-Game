@@ -466,7 +466,7 @@ public class PlayerHandler extends Gamer implements Runnable {
         MenuInputScanner scanner = new MenuInputScanner(options);
         scanner.setMessage("\nAn Indian flower seller approaches. Quer frôôÔ? My flowers can be very special. " +
                 "Chose wisely!" + Ascii.getFlower());
-        
+
         messageToAll("Quer frôôôÔ??! An overwhelming scent of current is spreading around the room");
 
         int answerQuestion = prompt.getUserInput(scanner);
