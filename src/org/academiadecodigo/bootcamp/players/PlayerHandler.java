@@ -248,19 +248,19 @@ public class PlayerHandler extends Gamer implements Runnable {
         int random = (int) ((Math.random()*100)+1);
         System.out.println("Random number: " + random);
 
-        if (getMoney()<45 && random<10 || getMoney()==10) {
+        if (getMoney()<45 && random<15 || getMoney()==10) {
             earnMoney();
         }
 
-        if(getMoney()>70 && random<10) {
+        if(getMoney()>60 && random<15) {
             girlAppears();
         }
 
-        if(getMoney()>0 && random<20) {
+        if(getMoney()>0 && random<20 && random>15) {
             offerDrink();
         }
 
-        if(getMoney()<= 0) {
+        if(getMoney()<= 9) {
             try {
                 bouncerApproach();
             } catch (InterruptedException e) {
@@ -268,12 +268,19 @@ public class PlayerHandler extends Gamer implements Runnable {
             }
         }
 
-        if (getMoney()>0 && random<10) {
+        if (getMoney()>0 && random<30 && random > 20) {
             try {
                 flowerSeller();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+        }
+
+        if (random<30) {
+            messageToAll("\nA weird smell is rising up around the table. "+getName()+ " just farted!" +
+                    " Is he nervous?");
+            messageToSelf("You've just farted a really stinky one. Other players can smell it too");
+            Thread.sleep(1000);
         }
     }
 
@@ -421,10 +428,11 @@ public class PlayerHandler extends Gamer implements Runnable {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                messageToSelf("\nFor being ridiculous, you will have to pay for this. Total cost: " + WATER_COST + ". ");
+                messageToSelf("\nFor being ridiculous, you will have to pay for this.\n");
+                messageToSelf("\nTotal cost: " + WATER_COST + ".\n");
                 pay(WATER_COST);
                 Thread.sleep(1000);
-                messageToSelf("Current balance:  " + getMoney() + "\n");
+                messageToSelf("\nCurrent balance:  " + getMoney() + "\n");
         }
     }
 
@@ -434,8 +442,9 @@ public class PlayerHandler extends Gamer implements Runnable {
             String[] options = {"Become a cleaner", "Visit Shemale friend"};
 
             MenuInputScanner scanner = new MenuInputScanner(options);
-            scanner.setMessage("\nDegenerate gambler, you have no money left to pay your debts, " +
+            scanner.setMessage("\nThe Club bouncer Ricardo asks: Degenerate gambler, you have no money left to pay your debts, " +
                     "what are you you going to do?\n");
+            messageToAll("\nThe Club Bouncer Ricardo is circling the table\n");
 
 
             int answerChoice = prompt.getUserInput(scanner);
@@ -445,6 +454,7 @@ public class PlayerHandler extends Gamer implements Runnable {
                     earnMoney();
                     Thread.sleep(1000);
                     messageToSelf("\nThat's what happens to losers");
+                    messageToAll("\n"+getName()+ " just lost his dignity\n");
                     break;
 
                 case 2:
@@ -452,7 +462,7 @@ public class PlayerHandler extends Gamer implements Runnable {
                     Thread.sleep(1000);
                     messageToSelf("\nWe knew you would like more of that! Hope you can sit down during " +
                             "you next rounds\n");
-                    messageToAll(getName()+" loved the dark room so much he was asking for more");
+                    messageToAll("\n"+getName()+" loved the dark room so much he was asking for more\n");
                     break;
             }
 
@@ -467,7 +477,7 @@ public class PlayerHandler extends Gamer implements Runnable {
         scanner.setMessage("\nAn Indian flower seller approaches. Quer frôôÔ? My flowers can be very special. " +
                 "Chose wisely!" + Ascii.getFlower());
 
-        messageToAll("Quer frôôôÔ??! An overwhelming scent of current is spreading around the room");
+        messageToAll("\nQuer frôôôÔ??! An overwhelming scent of current is spreading around the room\n");
 
         int answerQuestion = prompt.getUserInput(scanner);
 
@@ -477,9 +487,9 @@ public class PlayerHandler extends Gamer implements Runnable {
                 pay(FLOWER_COST);
                 messageToSelf("\nYou've just bought a plastic flower, smells like curry\n");
                 Thread.sleep(1000);
-                messageToSelf("\nThis flowers costs: "+FLOWER_COST+".");
-                messageToSelf("Current balance is: "+getMoney());
-                messageToAll(getName()+ " bought a smelly plastic flower");
+                messageToSelf("\nThis flowers costs: "+FLOWER_COST+".\n");
+                messageToSelf("\nCurrent balance is: "+getMoney()+"\n");
+                messageToAll("\n"+getName()+ " bought a smelly plastic flower");
                 break;
 
             case 2:
@@ -489,7 +499,7 @@ public class PlayerHandler extends Gamer implements Runnable {
                 messageToSelf("\nIt's free huncka huncka time\n");
                 Thread.sleep(1000);
                 messageToSelf(Ascii.getHooker());
-                messageToAll(getName()+" went for a quickie in the bathroom");
+                messageToAll("\n"+getName()+" went for a quickie in the bathroom\n");
                 break;
 
             case 3:
@@ -497,7 +507,7 @@ public class PlayerHandler extends Gamer implements Runnable {
                 messageToSelf("\nYou should be nice to people. You've just got robbed for " +ROBBED_MONEY);
                 Thread.sleep(1000);
                 messageToSelf("\nCurrent balance: "+getMoney());
-                messageToAll(getName() +" as been robbed.");
+                messageToAll("\n"+getName() +" as been robbed by an Indian midget.\n");
                 break;
         }
     }

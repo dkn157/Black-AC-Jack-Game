@@ -40,7 +40,8 @@ public class House {
 
         fixedPool = Executors.newFixedThreadPool(1500);
         serverSocket = new ServerSocket(myPort);
-
+        System.out.println("Server online");
+        System.out.println("Server running at this localhost, port:" + serverSocket.getLocalPort());
         while (serverSocket.isBound()) {
             joinGame(); //verificar se mudou
         }
@@ -98,7 +99,7 @@ public class House {
 
         for (int i = 0; i < playerList.size(); i++) {
 
-            if (playerList.get(i).getHandValue() != maxScore) {
+            if (playerList.get(i).getHandValue() == maxScore) {
 
 
                 winnersNames += playerList.get(i).getName() + " ";
