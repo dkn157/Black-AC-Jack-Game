@@ -32,7 +32,7 @@ public class House {
         deck = new Deck();
         gameOver = false;
         roundCounter = 0;
-        rounds = 1;
+        rounds = 15;
 
     }
 

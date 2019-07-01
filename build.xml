@@ -1,0 +1,24 @@
+<?xml version="1.0" ?>
+<project name="BlackAcJack" basedir="." default="jarfile">
+
+    <target name="init" description="Initialize-me master">
+        <property name="project.name" value="batata"/>
+        <property name="src.dir" value="src"/>
+        <property name="build.dir" value="build"/>
+        <property name="classes.dir" value="${build.dir}/classes"/>
+        <property name="etc.dir" value="etc"/>
+    </target>
+
+    <target name="prepare" description="Create build and class directories" depends="init">
+        <mkdir dir="${classes.dir}"/>
+    </target>
+
+    <target name="compilhar" description="Compile files" depends="prepare">
+        <javac srcdir="${src.dir}" destdir="${classes.dir}"/>
+    </target>
+
+    <target name="jarfile" description="ARCHIVE AS INIMIGAS" depends="compilhar">
+        <jar destfile="${build.dir}/${project.name}.jar" basedir="${classes.dir}" manifest="${etc.dir}/MANIFEST.MF"/>
+    </target>
+
+</project>

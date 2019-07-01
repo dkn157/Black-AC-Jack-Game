@@ -464,8 +464,10 @@ public class PlayerHandler extends Gamer implements Runnable {
         String[] options = {"Buy a flower", "Buy a bouquet", "Send the indian away"};
 
         MenuInputScanner scanner = new MenuInputScanner(options);
-        scanner.setMessage("\nAn Indian flower seller approaches. Quer froooo? My flowers can be very special. " +
+        scanner.setMessage("\nAn Indian flower seller approaches. Quer frôôÔ? My flowers can be very special. " +
                 "Chose wisely!" + Ascii.getFlower());
+        
+        messageToAll("Quer frôôôÔ??! An overwhelming scent of current is spreading around the room");
 
         int answerQuestion = prompt.getUserInput(scanner);
 
@@ -475,7 +477,8 @@ public class PlayerHandler extends Gamer implements Runnable {
                 pay(FLOWER_COST);
                 messageToSelf("\nYou've just bought a plastic flower, smells like curry\n");
                 Thread.sleep(1000);
-                messageToSelf("\nThis flowers costs: "+FLOWER_COST+". Current balance is: "+getMoney());
+                messageToSelf("\nThis flowers costs: "+FLOWER_COST+".");
+                messageToSelf("Current balance is: "+getMoney());
                 messageToAll(getName()+ " bought a smelly plastic flower");
                 break;
 
