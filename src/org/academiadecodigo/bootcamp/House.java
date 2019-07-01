@@ -32,7 +32,7 @@ public class House {
         deck = new Deck();
         gameOver = false;
         roundCounter = 0;
-        rounds = 15;
+        rounds = 1;
 
     }
 
@@ -100,9 +100,9 @@ public class House {
 
             if (playerList.get(i).getHandValue() != maxScore) {
 
-                for (int j = 0; j < winners.size(); j++) {
-                    winnersNames += winners.get(j).getName() + " ";
-                }
+
+                winnersNames += playerList.get(i).getName() + " ";
+
 
             }
         }
