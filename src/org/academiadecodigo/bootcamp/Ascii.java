@@ -128,58 +128,58 @@ public class Ascii {
 
 
     private static String jack = "\n\n\n     |    |\n" +
-                                "        |    |\n" +
-                                "    |____|\n" +
-                                "    |    |\n" +
-                                "    (    )\n" +
-                                "    )    (\n" +
-                                "  .'      `.\n" +
-                                " /          \\\n" +
-                                "|------------|\n" +
-                                "|JACK DANIELS|\n" +
-                                "|    ----    |\n" +
-                                "|   (No.7)   |\n" +
-                                "|    ----    |\n" +
-                                "| Tennessee  |\n" +
-                                "|  WHISKEY   |\n" +
-                                "|  40% Vol.  |\n" +
-                                "|------------|\n" +
-                                "|____________|";
+            "        |    |\n" +
+            "    |____|\n" +
+            "    |    |\n" +
+            "    (    )\n" +
+            "    )    (\n" +
+            "  .'      `.\n" +
+            " /          \\\n" +
+            "|------------|\n" +
+            "|JACK DANIELS|\n" +
+            "|    ----    |\n" +
+            "|   (No.7)   |\n" +
+            "|    ----    |\n" +
+            "| Tennessee  |\n" +
+            "|  WHISKEY   |\n" +
+            "|  40% Vol.  |\n" +
+            "|------------|\n" +
+            "|____________|";
 
     private static final String spades = "       /\\\n" +
-                                  "     .'  `.\n" +
-                                  "    '      `.\n" +
-                                  " .'          `.\n" +
-                                  "{              }\n" +
-                                  " ~-...-||-...-~\n" +
-                                  "       ||\n" +
-                                  "      '--`";
+            "     .'  `.\n" +
+            "    '      `.\n" +
+            " .'          `.\n" +
+            "{              }\n" +
+            " ~-...-||-...-~\n" +
+            "       ||\n" +
+            "      '--`";
 
     private static final String diamonds = "     /\\\n" +
-                                    "   .'  `.\n" +
-                                    "  '      `.\n" +
-                                    "<          >\n" +
-                                    " `.      .'\n" +
-                                    "   `.  .'\n" +
-                                    "     \\/";
+            "   .'  `.\n" +
+            "  '      `.\n" +
+            "<          >\n" +
+            " `.      .'\n" +
+            "   `.  .'\n" +
+            "     \\/";
 
 
     private static final String clubs = "       /\\\n" +
-                                 "     .'  `.\n" +
-                                 "    '      `.\n" +
-                                 " .'          `.\n" +
-                                 "{              }\n" +
-                                 " ~-...-||-...-~\n" +
-                                 "       ||\n" +
-                                 "      '--`";
+            "     .'  `.\n" +
+            "    '      `.\n" +
+            " .'          `.\n" +
+            "{              }\n" +
+            " ~-...-||-...-~\n" +
+            "       ||\n" +
+            "      '--`";
 
 
     private static final String hearts = " .-~~~-__-~~~-.\n" +
-                                  "{              }\n" +
-                                  " `.          .'\n" +
-                                  "   `.      .'\n" +
-                                  "     `.  .'\n" +
-                                  "       \\/\n";
+            "{              }\n" +
+            " `.          .'\n" +
+            "   `.      .'\n" +
+            "     `.  .'\n" +
+            "       \\/\n";
 
 
     private static final String flower = "Chose wisely!" +
@@ -261,6 +261,11 @@ public class Ascii {
         return diamonds;
     }
 
+
+    public static String getHearts() {
+        return hearts;
+    }
+
     public static String getClubs() {
         return clubs;
     }
@@ -274,3 +279,4 @@ public class Ascii {
     }
 
 }
+
