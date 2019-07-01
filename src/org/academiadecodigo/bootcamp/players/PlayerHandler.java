@@ -481,7 +481,7 @@ public class PlayerHandler extends Gamer implements Runnable {
 
             case 2:
                 pay(BOUQUET_COST);
-                messageToSelf("\nYou've just bought an incredible bouquet and you offered to a sweetie\n");
+                messageToSelf("\nYou've just bought an incredible bouquet and you offered it to a sweetie\n");
                 Thread.sleep(1000);
                 messageToSelf("\nIt's free huncka huncka time\n");
                 Thread.sleep(1000);
