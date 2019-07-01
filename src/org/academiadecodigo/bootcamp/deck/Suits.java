@@ -1,5 +1,7 @@
 package org.academiadecodigo.bootcamp.deck;
 
+import org.academiadecodigo.bootcamp.Ascii;
+
 public enum Suits {
 
     SPADES("spades"),
@@ -8,40 +10,40 @@ public enum Suits {
     CLUBS("clubs"),
     ;
 
-    private final String spades = "       /\\\n" +
-                                  "     .'  `.\n" +
-                                  "    '      `.\n" +
-                                  " .'          `.\n" +
-                                  "{              }\n" +
-                                  " ~-...-||-...-~\n" +
-                                  "       ||\n" +
-                                  "      '--`";
-
-    private final String diamonds = "     /\\\n" +
-                                    "   .'  `.\n" +
-                                    "  '      `.\n" +
-                                    "<          >\n" +
-                                    " `.      .'\n" +
-                                    "   `.  .'\n" +
-                                    "     \\/";
-
-
-    private final String clubs = "       /\\\n" +
-                                 "     .'  `.\n" +
-                                 "    '      `.\n" +
-                                 " .'          `.\n" +
-                                 "{              }\n" +
-                                 " ~-...-||-...-~\n" +
-                                 "       ||\n" +
-                                 "      '--`";
-
-
-    private final String hearts = " .-~~~-__-~~~-.\n" +
-                                  "{              }\n" +
-                                  " `.          .'\n" +
-                                  "   `.      .'\n" +
-                                  "     `.  .'\n" +
-                                  "       \\/\n";
+//    private final String spades = "       /\\\n" +
+//                                  "     .'  `.\n" +
+//                                  "    '      `.\n" +
+//                                  " .'          `.\n" +
+//                                  "{              }\n" +
+//                                  " ~-...-||-...-~\n" +
+//                                  "       ||\n" +
+//                                  "      '--`";
+//
+//    private final String diamonds = "     /\\\n" +
+//                                    "   .'  `.\n" +
+//                                    "  '      `.\n" +
+//                                    "<          >\n" +
+//                                    " `.      .'\n" +
+//                                    "   `.  .'\n" +
+//                                    "     \\/";
+//
+//
+//    private final String clubs = "       /\\\n" +
+//                                 "     .'  `.\n" +
+//                                 "    '      `.\n" +
+//                                 " .'          `.\n" +
+//                                 "{              }\n" +
+//                                 " ~-...-||-...-~\n" +
+//                                 "       ||\n" +
+//                                 "      '--`";
+//
+//
+//    private final String hearts = " .-~~~-__-~~~-.\n" +
+//                                  "{              }\n" +
+//                                  " `.          .'\n" +
+//                                  "   `.      .'\n" +
+//                                  "     `.  .'\n" +
+//                                  "       \\/\n";
 
 
     private final String suitType;
@@ -50,24 +52,24 @@ public enum Suits {
         this.suitType = suitType;
     }
 
-    public String getSuitArt(){
+    public String getSuitArt() {
 
         String typeOfSuit = "";
 
-        if(suitType.equals("spades")) {
-            typeOfSuit = spades;
+        if (suitType.equals("spades")) {
+            typeOfSuit = Ascii.getSpades();
         }
 
-        if(suitType.equals("clubs")) {
-            typeOfSuit = clubs;
+        if (suitType.equals("clubs")) {
+            typeOfSuit = Ascii.getClubs();
         }
 
-        if(suitType.equals("hearts")) {
-            typeOfSuit = hearts;
+        if (suitType.equals("hearts")) {
+            typeOfSuit = Ascii.getHearts();
         }
 
-        if(suitType.equals("diamonds")) {
-            typeOfSuit=  diamonds;
+        if (suitType.equals("diamonds")) {
+            typeOfSuit = Ascii.getDiamonds();
         }
 
         return typeOfSuit;
