@@ -7,14 +7,10 @@ Project completed with 7 weeks of bootcamp, using Prompt-View lib, developed by 
 <br />Built with 1.8 Java
 
 ### Academia de Código
-A 14-Week Intensive && Immersive FullStack Programming Bootcamp.
+A 14-Week Intensive && Immersive FullStack Programming Bootcamp. [More info](https://www.academiadecodigo.org/)
 
 ### Authors
 <br />Diogo Noronha | @[dkn157](https://github.com/dkn157)  
 <br />Pedro Albuquerque |   
 <br />Rodrigo Savaris | @[RSavaris](https://gitlab.com/RSavaris)   
 <br />Martim Lima
-
-
-##tests
-[Quora profile link for Adam D'Angelo](http://www.quora.com/Adam-DAngelo)
