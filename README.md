@@ -10,7 +10,11 @@ Project completed with 7 weeks of bootcamp, using Prompt-View lib, developed by 
 A 14-Week Intensive && Immersive FullStack Programming Bootcamp.
 
 ### Authors
-<br />Diogo Noronha  
-<br />Pedro Albuquerque  
-<br />Rodrigo Savaris  
+<br />Diogo Noronha | @[dkn157](https://github.com/dkn157)  
+<br />Pedro Albuquerque |   
+<br />Rodrigo Savaris | @[RSavaris](https://gitlab.com/RSavaris)   
 <br />Martim Lima
+
+
+##tests
+[Quora profile link for Adam D'Angelo](http://www.quora.com/Adam-DAngelo)
