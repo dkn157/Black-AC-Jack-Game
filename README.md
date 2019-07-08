@@ -11,6 +11,6 @@ A 14-Week Intensive && Immersive FullStack Programming Bootcamp. [More info](htt
 
 ### Authors
 <br />Diogo Noronha | @[dkn157](https://github.com/dkn157)  
-<br />Pedro Albuquerque |   
+<br />Pedro Albuquerque | @[PedroAlbuquerque](https://gitlab.com/PedroAlbuquerque)   
 <br />Rodrigo Savaris | @[RSavaris](https://gitlab.com/RSavaris)   
-<br />Martim Lima
+<br />Martim Lima | @[martimdLima](https://github.com/martimdLima)  
