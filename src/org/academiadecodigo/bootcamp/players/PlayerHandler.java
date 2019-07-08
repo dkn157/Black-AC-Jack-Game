@@ -279,7 +279,7 @@ public class PlayerHandler extends Gamer implements Runnable {
         if (random<30) {
             messageToAll("\nA weird smell is rising up around the table. "+getName()+ " just farted!" +
                     " Is he nervous?");
-            messageToSelf("You've just farted a really stinky one. Other players can smell it too");
+            messageToSelf("\nYou've just farted a really stinky one. Other players can smell it too.\n");
             Thread.sleep(1000);
         }
     }
@@ -348,7 +348,7 @@ public class PlayerHandler extends Gamer implements Runnable {
     //earn money method. should be prompt to player if money is low
     public void earnMoney() throws IOException, InterruptedException {
 
-        String[] options = {"Fuck it. I really need money to gamble", "My dignity is more important"};
+        String[] options = {"\nFuck it. I really need money to gamble", "My dignity is more important\n"};
 
         MenuInputScanner scanner = new MenuInputScanner(options);
         scanner.setMessage("\nSince you are low on coins, a group of big boys approaches you with a proposition." +
@@ -361,7 +361,7 @@ public class PlayerHandler extends Gamer implements Runnable {
             case 1:
 
                 this.setMoney(getMoney() + SHEMALE_MONEY);
-                messageToSelf("You chose, literally, the hard way... Brave soldier");
+                messageToSelf("\nYou chose, literally, the hard way... Brave soldier\n");
                 try {
                     Thread.sleep(3000);
                 } catch (InterruptedException e) {
