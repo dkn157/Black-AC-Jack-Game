@@ -4,6 +4,8 @@
 
 ## Project overview
 <br />This is not a regular version, this is not a typical multiplayer card game. This is the naughty version of Black Jack.
+<br />Beware! Send your kids to bed, this is not recomended for under ages.
+
 <br />Project completed with 7 weeks of bootcamp, using [Prompt-View](https://github.com/academia-de-codigo/prompt-view) library, developed by Academia de Código. 
 <br />Built with 1.8 Java
 
