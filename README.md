@@ -9,7 +9,7 @@
 <br />
 <br /> Recommended players: 2 - 10;
 <br />
-<br /> Keep calm and take turns agains your opponents.
+<br /> Keep calm and take turns against your opponents.
 <br /> 
 <br />Run the jar file as game server and connect via netcat. Default access point is: localhost:8080.
 <br />
