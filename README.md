@@ -7,6 +7,12 @@
 <br />
 <br />Beware! Send your kids to bed, this is not recomended for minors.
 <br />
+<br /> Recommended players: 2 - 10;
+<br />
+<br /> Keep calm and take turns agains your opponents.
+<br /> 
+<br />Run the jar file as you game server and connect via netcat. Default access point is: localhost:8080.
+<br />
 <br />Project completed with 7 weeks of bootcamp, using [Prompt-View](https://github.com/academia-de-codigo/prompt-view) library, developed by Academia de Código. 
 <br />Built with 1.8 Java
 
