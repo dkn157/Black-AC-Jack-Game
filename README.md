@@ -14,7 +14,7 @@
 <br />Run the jar file as game server and connect via netcat. Default access point is: localhost:8080. Let your opponents connect to your server and enjoy.
 <br />
 <br />Project completed with 7 weeks of bootcamp, using [Prompt-View](https://github.com/academia-de-codigo/prompt-view) library, developed by Academia de Código. 
-<br />Built with 1.8 Java
+<br />
 
 ### Academia de Código
 A 14-Week Intensive && Immersive FullStack Programming Bootcamp. [More info](https://www.academiadecodigo.org/)
